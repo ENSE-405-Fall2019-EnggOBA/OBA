@@ -1,4 +1,4 @@
-# Frameworks I know
+# Frameworks I know or have heard of
 
 see [realworld.io](https://realworld.io) for basic architecture examples of various frameworks
 
@@ -20,8 +20,8 @@ see [realworld.io](https://realworld.io) for basic architecture examples of vari
 
 ## Backend
 
-- NodeJS & Express & TypeScript
-- dotnet core
+- NodeJS & Express & TypeScript (did 2 work terms with this)
+- dotnet core (did 1 work term + lots of part time work with this)
 - [Hexagonal Architecture](https://en.wikipedia.org/wiki/Hexagonal_architecture_(software))
   - also see onion architecture
   - domain model is core model of system (operations done on this & invalid instances can't be constructed without throwing an exception); this component doesn't reference any outer parts of the system
