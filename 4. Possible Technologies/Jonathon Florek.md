@@ -33,6 +33,8 @@ see [realworld.io](https://realworld.io) for basic architecture examples of vari
 - other possible db layers I don't have experience in: Dapper (dotnet)
 - can also do Razor pages to define html templates in dotnet core (sort of like php generating html); this eliminates need for web api entirely but makes using javascript frameworks on client side more challenging
 - I haven't done domain driven design but it would be good experience to do it (Tim also mentioned it, maybe he has resources)
+- testing dotnet: xunit
+- testing nodejs: jest
 
 ## Other Opinions
 
