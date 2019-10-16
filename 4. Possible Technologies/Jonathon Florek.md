@@ -47,7 +47,7 @@ see [realworld.io](https://realworld.io) for basic architecture examples of vari
 
 ## Regarding a wiki or forum
 
-- [Wiki.js](https://wiki.js.org/) is open source wiki software with authentication modules that can integrate with a number of oauth2 providers including azure ad, auth0, etc (no research done on how well user permissions can be defined with this)
+- [Wiki.js](https://wiki.js.org/) is open source wiki software with authentication modules that can integrate with a number of oauth2 providers including azure ad, auth0, etc (no research done on how well user permissions can be defined with this). **this software has SAML enterprise security integration.**
 - there's probably forum software somewhere
 
 
