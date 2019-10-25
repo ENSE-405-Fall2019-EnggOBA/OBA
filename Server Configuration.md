@@ -5,6 +5,7 @@ The purpose of this document is to document the steps taken to configure the ser
 ## Notes
 
 php & html files served from `/var/www/html/`
+
 apache configuration file at `/etc/httpd/conf/httpd.conf`
 
 ## Installing NodeJS and NPM
