@@ -21,6 +21,8 @@ router.post('/users/login', (req, res, next) => {
         return res.status(422).json({ errors })
     }
 
+    // passport is meant to be used as a middleware, so
+    // we have to call it with our req, res, next parameters
     passport.authenticate('local', (err, user, info) => {
         if (err) {
             return next(err)
@@ -38,6 +40,7 @@ router.post('/users/login', (req, res, next) => {
 
 router.post('/users', (req, res, next) => {
     const user = new User()
+    user.role = req.body.user.role
     user.email = req.body.user.email
     user.setPassword(req.body.user.password)
 
