@@ -4,8 +4,6 @@ const crypto = require('crypto')
 const jwt = require('jsonwebtoken')
 const { secret } = require('../config')
 
-const User = 'User'
-
 const UserSchema = new mongoose.Schema({
     email: { type: String, unique: true, required: true },
     role: String,
@@ -46,9 +44,7 @@ UserSchema.methods.generateJWT = function() {
     }, secret)
 }
 
-module.exports.User = User
-
-mongoose.model(User, UserSchema)
+mongoose.model('User', UserSchema)
 
 function salt() {
     return crypto.randomBytes(16).toString('hex')
