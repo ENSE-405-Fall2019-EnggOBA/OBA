@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const router = require('express').Router()
+const passport = require('passport')
 const User = mongoose.model('User')
 
 router.post('/users/login', (req, res, next) => {
@@ -20,13 +21,26 @@ router.post('/users/login', (req, res, next) => {
         return res.status(422).json({ errors })
     }
 
+    passport.authenticate('local', (err, user, info) => {
+        if (err) {
+            return next(err)
+        }
+
+        if (user) {
+            return res.json({
+                user: user.toAuthJSON()
+            })
+        }
+
+        return res.status(422).json(info)
+    })(req, res, next)
 })
 
 router.post('/users', (req, res, next) => {
     const user = new User()
     user.email = req.body.user.email
     user.setPassword(req.body.user.password)
-    
+
     user.save().then(() => {
         return res.json({
             user: user.toAuthJSON()
