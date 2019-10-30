@@ -12,6 +12,6 @@ function getToken(req) {
 
 module.exports.required = jwt({
     secret,
-    userProperty: 'payload',
+    userProperty: 'currentUser',
     getToken,
 })

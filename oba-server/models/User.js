@@ -38,6 +38,7 @@ UserSchema.methods.generateJWT = function() {
     return jwt.sign({
         id: this._id,
         username: this.username,
+        role: this.role,
 
         // https://tools.ietf.org/html/rfc7519#section-4.1.4
         exp: Math.round(expires.getTime() / 1000),
