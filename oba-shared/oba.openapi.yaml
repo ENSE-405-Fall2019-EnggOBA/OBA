@@ -1,0 +1,89 @@
+openapi: 3.0.0
+info:
+  title: oba-server
+  version: 0.0.0-alpha0
+servers:
+  - url: http://localhost:3000
+security:
+  - BearerAuth: []
+paths:
+  /user:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+  /users:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    role:
+                      type: string
+                    email:
+                      type: string
+                    password:
+                      type: string
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+                
+  /users/login:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        email:
+          type: string
+        token:
+          type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
