@@ -43,3 +43,5 @@ Followed [this](https://www.digitalocean.com/community/tutorials/how-to-set-up-a
 `sudo pm2 startup systemd` to launch pm2 on server launch
 
 (in directory of application) `pm2 start index.js` to start the application (TODO: figure out how to name things within pm2 other than 'index')
+
+to stop: `pm2 stop index.js`
