@@ -19,8 +19,7 @@ UserSchema.methods.setPassword = function(password) {
 }
 
 UserSchema.methods.isPassword = function(password) {
-    const hash = hash(password, this.salt)
-    return this.hash === hash
+    return this.hash === hash(password, this.salt)
 }
 
 UserSchema.methods.toAuthJSON = function() {

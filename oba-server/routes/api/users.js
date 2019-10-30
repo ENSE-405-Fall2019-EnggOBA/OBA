@@ -6,7 +6,7 @@ const auth = require('../auth')
 
 router.get('/user', auth.required, async (req, res, next) => {
     try {
-        const currentUser = User.findById(req.currentUser.id)
+        const currentUser = await User.findById(req.currentUser.id)
         if (!currentUser) {
             return res.sendStatus(401)
         }
