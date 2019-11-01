@@ -17,6 +17,7 @@ mongoose.connect(config.mongodbUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
+    useFindAndModify: false
 })
 
 if (!config.isProduction) {
@@ -25,6 +26,8 @@ if (!config.isProduction) {
 }
 
 require('./models/User')
+require('./models/Course')
+require('./models/Class')
 require('./config/passport')
 
 // main application routes

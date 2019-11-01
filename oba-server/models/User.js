@@ -7,6 +7,7 @@ const { secret } = require('../config')
 const UserSchema = new mongoose.Schema({
     email: { type: String, unique: true, required: true },
     role: String,
+    classes: [{type: mongoose.Schema.Types.ObjectId, ref: 'Class'}],
     hash: String,
     salt: String,
 }, { timestamps: true })
@@ -44,7 +45,7 @@ UserSchema.methods.generateJWT = function() {
     }, secret)
 }
 
-mongoose.model('User', UserSchema)
+mongoose.model('User', UserSchema, 'Users');
 
 function salt() {
     return crypto.randomBytes(16).toString('hex')
