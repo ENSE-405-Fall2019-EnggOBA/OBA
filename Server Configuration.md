@@ -45,3 +45,10 @@ Followed [this](https://www.digitalocean.com/community/tutorials/how-to-set-up-a
 (in directory of application) `pm2 start index.js` to start the application (TODO: figure out how to name things within pm2 other than 'index')
 
 to stop: `pm2 stop index.js`
+
+## Deploying New Backend Code
+
+1. `pm2 stop app.js`
+1. `sudo rm -rf {location of existing install}`
+1. winscp or other ftp application copy the new files into `/var/www/node`
+1. in location of new server entry point: `pm2 start app.js`
