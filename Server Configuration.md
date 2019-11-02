@@ -51,4 +51,5 @@ to stop: `pm2 stop index.js`
 1. `pm2 stop app.js` to stop the existing application in pm2
 1. `sudo rm -rf {location of existing install}` to delete the old installation, even if there are permission problems
 1. winscp or other ftp application copy the new files into `/var/www/node`
+1. in location of package.json: `npm install` to install npm packages
 1. in location of new server entry point: `pm2 start app.js` to start it
