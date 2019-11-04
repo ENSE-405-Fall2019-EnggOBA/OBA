@@ -2,40 +2,40 @@ const mongoose = require("mongoose");
 
 const ClassSchema = new mongoose.Schema(
   {
-    course_id: { type: mongoose.Schema.Types.ObjectId, ref: "Course" },
-    instructor_ids: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    term: { type: String },
-    year: {
-      type: String,
-      validate: [
-        validate_year_field,
-        "Class year must be for the current year"
-      ]
+    course_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Course",
+      required: true
     },
-    status: String,
+    instructor_ids: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }
+    ],
+    term: { type: String, required: true },
+    year: { type: Number, required: true },
+    status: { type: String, required: true },
     graduate_attributes: [String],
     indicators: [String],
-    questions_answers: [{ question: String, answer: String }],
+    questions_answers: [{ _id: false, question: String, answer: String }],
     evaluation_report: {
       exceeds: {
         criteria: String,
-        grade: String,
-        documents: [String]
+        grade: Number,
+        documents: String
       },
       meets: {
         criteria: String,
-        grade: String,
-        documents: [String]
+        grade: Number,
+        documents: String
       },
       developing: {
         criteria: String,
-        grade: String,
-        documents: [String]
+        grade: Number,
+        documents: String
       },
       fail: {
         criteria: String,
-        grade: String,
-        documents: [String]
+        grade: Number,
+        documents: String
       }
     }
   },

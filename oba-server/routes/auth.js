@@ -17,6 +17,7 @@ function getToken(req) {
 
 function guard(err, req, res, next) {
   if (err.name === "UnauthorizedError") {
+    const res_body = { status: "", errors: {}, result: {} };
     res.status(http_status.UNAUTHORIZED);
     logger.error(
       `[${req.protocol +
@@ -26,16 +27,12 @@ function guard(err, req, res, next) {
         http_status.UNAUTHORIZED
       )}`
     );
-    const status = http_status.getStatusText(http_status.UNAUTHORIZED);
-    return res.json({
-      status: "bad",
-      result: "",
-      error:
-        status.toUpperCase() +
-        "(" +
-        http_status.getStatusCode(status).toString() +
-        ")"
-    });
+    res_body.errors['auth'] = "Unauthorized access to protected route.";
+    res_body.status = http_status.UNAUTHORIZED.toString() +
+    " (" +
+    http_status.getStatusText(http_status.UNAUTHORIZED) +
+    ")";
+    return res.json(res_body);
   } else next();
 }
 

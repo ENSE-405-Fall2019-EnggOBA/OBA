@@ -10,7 +10,7 @@ function http_error_response(status_code, error) {
 
 function mongoose_promise_chain_error(error_desc) {
   const err = new Error();
-  err.name = mongoose_chain_error;
+  err.meta = mongoose_chain_error;
   err.desc = error_desc;
   return err;
 }
