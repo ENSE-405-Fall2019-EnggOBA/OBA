@@ -10,7 +10,6 @@ The end points described below are meant to serve json to the oba-client.
 Documentation style follows @iros REST api documentation.
 
 
-* **All http responses are encoded in JSON.**
 
 ## Routing Table
 |  # 	| Category 	|                 Route URL                	| Request Type 	|                                                    Desc                                                    	| More Info 	|
@@ -57,6 +56,8 @@ Routes Table of Contents
 
 Notes
 ============
+
+* **All http responses are encoded in JSON.**
 
 * **All http requests are encoded in JSON:** 
     `application/json` .
@@ -111,8 +112,8 @@ Notes
 	                  NDM5NzN9.frrVRoN0346B1VwNUaYorpiPEo28YAH3afVFyXptzHE"
 	    }
 	    ```
-	  
-	  
+	    
+	    
 Users
 ============
 Register
