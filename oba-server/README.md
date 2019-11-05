@@ -9,20 +9,7 @@ The end points described below are meant to serve json to the oba-client.
 
 Documentation style follows @iros REST api documentation.
 
-General:
----
-* **All http requests are encoded in JSON:** 
-    `application/json` .
-    
-   * **Except Route #10 which requires one of two MIME types for *'content-type'* in a header field:** 
-   
-       `multipart/form-data` .
-    
-       OR
-    
-       `application/x-www-form-urlencoded` .
-       
-* **All http responses are encoded in JSON.**
+
 
 ## Routing Table
 |  # 	| Category 	|                 Route URL                	| Request Type 	|                                                    Desc                                                    	| More Info 	|
@@ -69,42 +56,64 @@ Routes Table of Contents
 
 Notes
 ============
-If Routes are protected : 
 
-* **Auth Required:**
-Yes
+* **All http responses are encoded in JSON.**
 
-Then Bearer Authentication is required on routes:
-
-* **Required:**
-
-  * **Header:**
-  
-    `key=[{string}]`
-
-    `value=["string"]`
+* **All http requests are encoded in JSON:** 
+    `application/json` .
     
-* **Constraints:**
+   * **Except Route #10 which requires one of two MIME types for *'content-type'* in a header field:** 
+   
+       `multipart/form-data` .
+    
+       OR
+    
+       `application/x-www-form-urlencoded` .
+       
+* **All http responses are encoded in JSON.**
+
+* **If Routes are protected :**
+
+	* **Auth Required:**
+	    Yes
+
+	     Then Bearer Authentication is required on routes:
+	 * **Required:**
+
+             * **Header:**
   
-  `key=[{string}]` :
-  
-  Must contain "Authorization"
-  
-  `value=["string"]` :
-  
-  Must be of form "Token x" where x is the string value of the signed JWT token.
+                `key=[{string}]`
+
+                `value=["string"]`
+    
+	* **Constraints:**
+	  
+	    `key=[{string}]` :
+	  
+	     Must contain "Authorization"
+	  
+	    `value=["string"]` :
+	  
+	     Must be of form:  
+	     `Token x`
+	  
+	     OR
+	  
+	     `Bearer x`
+	    
+	      where x is the string value of the signed JWT token.
         
-* **Sample Request Header:**
-```json
-{
-    "key": "Authorization",
-    "value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkYmZiMWM1MzY4Mz
-              c4NTU4NDU5M2NlYyIsInJvbGUiOiJpbnN0cnVjdG9yIiwiZXhwIjoxNTc4MDI3OTc0LCJpYXQiOjE1NzI4
-              NDM5NzN9.frrVRoN0346B1VwNUaYorpiPEo28YAH3afVFyXptzHE"
-}
-```
-
-
+	* **Sample Request Header:**
+	    ```json
+	    {
+	        "key": "Authorization",
+	        "value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkYmZiMWM1MzY4Mz
+	                  c4NTU4NDU5M2NlYyIsInJvbGUiOiJpbnN0cnVjdG9yIiwiZXhwIjoxNTc4MDI3OTc0LCJpYXQiOjE1NzI4
+	                  NDM5NzN9.frrVRoN0346B1VwNUaYorpiPEo28YAH3afVFyXptzHE"
+	    }
+	    ```
+	    
+	    
 Users
 ============
 Register
