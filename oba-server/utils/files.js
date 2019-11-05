@@ -21,13 +21,13 @@ const multer_multi_doc_upload = multer({
   { name: "fail_doc", maxCount: 1 }
 ]);
 
-function upload_async(multer_upload_sig, req, res) {
+function upload_promise(multer_upload_sig, req, res) {
   return new Promise(function(resolve, reject) {
-    multer_upload_sig(req, res, function(err) {
+    multer_upload_sig(req, res, err => {
       if (err !== undefined) return reject(err);
-      resolve(req);
+      resolve(req.files);
     });
   });
 }
 
-module.exports = { upload_async, multer_multi_doc_upload };
+module.exports = { upload_promise, multer_multi_doc_upload };

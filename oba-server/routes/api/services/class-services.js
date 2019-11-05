@@ -16,7 +16,7 @@ function update(req, res) {
   // uploads files to server and binds multipart/form-data
   // encoded data into req.body, files in req.files
   files
-    .upload_async(files.multer_multi_doc_upload, req, res)
+    .upload_promise(files.multer_multi_doc_upload, req, res)
     .then((result) => {
       logger.info("files uploaded. request filled with multipart/form data.");
       return Users.findById(req.currentUser.id).exec();
