@@ -18,7 +18,6 @@ function update(req, res) {
   files
     .upload_async(files.multer_multi_doc_upload, req, res)
     .then((result) => {
-      console.log(result);
       logger.info("files uploaded. request filled with multipart/form data.");
       return Users.findById(req.currentUser.id).exec();
     })
