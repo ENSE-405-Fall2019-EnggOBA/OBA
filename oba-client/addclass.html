@@ -2,7 +2,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Courses Details</title>
+	<title>Add Class</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
@@ -38,7 +38,7 @@
 		<img src="https://www.uregina.ca/assets/templates/img/logo.png" alt="UR Courses" width="150px" height="150px">
 	</div>
 
-
+	
 	<div class="col-sm" >
 		<div class="form-group">
  	 	    <select class="form-control" id="courseSelect">
@@ -100,7 +100,7 @@
 	</section>
 
 <form class="was-validated">
-	<section>
+	<section class="py-0">
 		<table class="table table-bordered">
 			<thead class="thead-dark">
 			<tr >
@@ -215,7 +215,9 @@
 			
 			<div class="w-100"></div>
 			
-			<div class="col"></div>
+			<div class="col">
+				<button onclick="location.href='myclasses.html'" type="button" class="btn btn-outline-primary">Back to my classes</button>
+			</div>
 			
 			<div class="col-auto">
 				<button type="button" class="btn btn-primary">Add GA</button>
