@@ -6,7 +6,7 @@ function registerUser({
 	role,
 }) {
 	return new Promise((resolve, reject) => {
-		request = {
+		const request = {
 			url: baseUrl + '/users',
 			type: 'POST',
 			crossDomain: true,
@@ -33,7 +33,7 @@ function loginUser({
 	password,
 }) {
 	return new Promise((resolve, reject) => {
-		request = {
+		const request = {
 			url: baseUrl + '/users/login',
 			type: 'POST',
 			dataType: 'json',
@@ -53,11 +53,59 @@ function loginUser({
 	})
 }
 
+function getAllCourses({
+	token,
+}) {
+	return new Promise((resolve, reject) => {
+		const request = {
+			url: baseUrl + '/courses/all',
+			type: 'GET',
+			dataType: 'json',
+			contentType: 'application/json',
+			headers: { 'Authorization': 'Bearer ' + token },
+			success: ({ result }) => {
+				resolve(result)
+			},
+			error: reject,
+		}
+		$.ajax(request)
+	})
+}
+
+function createCourse({
+	token,
+	name,
+	faculty,
+	status,
+}) {
+	return new Promise((resolve, reject) => {
+		const request = {
+			url: baseUrl + '/courses',
+			type: 'POST',
+			dataType: 'json',
+			contentType: 'application/json',
+			headers: { 'Authorization': 'Bearer ' + token },
+			data: JSON.stringify({
+				course: {
+					name,
+					faculty,
+					status,
+				},
+			}),
+			success: ({ result }) => {
+				resolve(result)
+			},
+			error: reject,
+		}
+		$.ajax(request)
+	})
+}
+
 function getIndicators({
 	token,
 }) {
 	return new Promise((resolve, reject) => {
-		request = {
+		const request = {
 			url: baseUrl + '/forms/indicators',
 			type: 'GET',
 			dataType: 'json',
@@ -76,7 +124,7 @@ function getGraduateAttributes({
 	token,
 }) {
 	return new Promise((resolve, reject) => {
-		request = {
+		const request = {
 			url: baseUrl + '/forms/grad_attributes',
 			type: 'GET',
 			dataType: 'json',
@@ -95,7 +143,7 @@ function getQuestions({
 	token,
 }) {
 	return new Promise((resolve, reject) => {
-		request = {
+		const request = {
 			url: baseUrl + '/forms/questions',
 			type: 'GET',
 			dataType: 'json',
