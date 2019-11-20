@@ -57,21 +57,6 @@ Routes Table of Contents
 Notes
 ============
 
-* **All http responses are encoded in JSON.**
-
-* **All http requests are encoded in JSON:** 
-    `application/json` .
-    
-   * **Except Route #10 which requires one of two MIME types for *'content-type'* in a header field:** 
-   
-       `multipart/form-data` .
-    
-       OR
-    
-       `application/x-www-form-urlencoded` .
-       
-* **All http responses are encoded in JSON.**
-
 * **If Routes are protected :**
 
 	* **Auth Required:**
@@ -82,13 +67,13 @@ Notes
 
              * **Header:**
   
-                `key=[{string}]`
+                `key=[string]`
 
                 `value=["string"]`
     
 	* **Constraints:**
 	  
-	    `key=[{string}]` :
+	    `key=[string]` :
 	  
 	     Must contain "Authorization"
 	  
@@ -113,6 +98,17 @@ Notes
 	    }
 	    ```
 	    
+	    OR
+	    
+	    ```json
+	    {
+	        "key": "Authorization",
+	        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkYmZiMWM1MzY4Mz
+	                  c4NTU4NDU5M2NlYyIsInJvbGUiOiJpbnN0cnVjdG9yIiwiZXhwIjoxNTc4MDI3OTc0LCJpYXQiOjE1NzI4
+	                  NDM5NzN9.frrVRoN0346B1VwNUaYorpiPEo28YAH3afVFyXptzHE"
+	    }
+	    ```
+	    
 	    
 Users
 ============
@@ -125,11 +121,15 @@ Register
 * **Route:** 
 
   localhost:3000/api/users
-  
-  
+ 
 * **Request Type:** 
   
   POST
+  
+  
+* **Content Type:** 
+ 
+    `application/json` .
   
   
 * **Auth Required:**
@@ -232,6 +232,11 @@ Login
   POST
   
   
+* **Content Type:** 
+ 
+    `application/json` .
+  
+  
 * **Auth Required:**
 
   **Yes**
@@ -319,6 +324,12 @@ Create
 * **Request Type:** 
   
   POST
+  
+  
+* **Content Type:** 
+ 
+    `application/json` .
+  
   
 * **Auth Required:**
 
@@ -442,6 +453,12 @@ GetObjectId
   
   GET
   
+  
+* **Content Type:** 
+ 
+    `application/json` .
+  
+  
 * **Auth Required:**
 
   **Yes**
@@ -531,6 +548,12 @@ GetName
 * **Request Type:** 
   
   GET
+  
+  
+* **Content Type:** 
+ 
+    `application/json` .
+  
   
 * **Auth Required:**
 
@@ -641,6 +664,12 @@ GetAll
   
   GET
   
+  
+* **Content Type:** 
+ 
+    `application/json` .
+  
+  
 * **Auth Required:**
 
   **Yes**
@@ -718,6 +747,12 @@ Create
 * **Request Type:** 
   
   POST
+  
+  
+* **Content Type:** 
+ 
+    `application/json` .
+  
   
 * **Auth Required:**
 
@@ -876,6 +911,12 @@ GetAllName
   
   GET
   
+  
+* **Content Type:** 
+ 
+    `application/json` .
+  
+  
 * **Auth Required:**
 
   **Yes**
@@ -1016,6 +1057,12 @@ GetObjectId
   
   GET
   
+  
+* **Content Type:** 
+ 
+    `application/json` .
+  
+  
 * **Auth Required:**
 
   **Yes**
@@ -1127,6 +1174,12 @@ GetAll
 * **Request Type:** 
   
   GET
+  
+  
+* **Content Type:** 
+ 
+    `application/json` .
+  
   
 * **Auth Required:**
 
@@ -1249,18 +1302,26 @@ Update
 
   localhost:3000/api/classes/
   
+  
 * **Request Type:** 
   
   PUT
   
+  
+* **Content Type:** 
+ 
+    `multipart/form-data` .
+    
+    OR
+    
+    `application/x-www-form-urlencoded` .
+  
+  
 * **Auth Required:**
 
   **Yes**
-  
-  
+ 
 * **Required:**
-
-*note: request must be sent with multipart/form-data encryption*
 
     * **Body:**
     
@@ -1276,9 +1337,9 @@ Update
     
     `fail_doc=[file]`
     
-    `questions=[array[string]]`
+    `questions=[string[]]`
     
-    `answers=[array[string]]`
+    `answers=[string[]]`
 
     `class_id=[ObjectId]`
     
@@ -1336,11 +1397,11 @@ Update
     
     Must be of type: doc,txt, or pdf
     
-    `questions=[array[string]]` :
+    `questions=[string[]]` :
     
     Array length must be same as answers array length. Max length for each question of 500 characters.
     
-    `answers=[array[string]]` : 
+    `answers=[string[]]` : 
     
     Array length must be same as questions array length. Max length for each answer of 150 characters.
     
@@ -1372,7 +1433,92 @@ Update
   
 * **Sample Request:**
 
-```json  
+*Fields:*
+
+```  
+- name : graduateattr
+- type : string
+- sample_value : "here is a graduate attribute"
+
+- name : indicator
+- type : string
+- sample_value : "wow an indicator"
+
+- name : exceeds_doc
+- type : file
+
+- name : meets_doc
+- type : file
+
+- name : developing_doc
+- type : file
+
+- name : fail_doc
+- type : file
+
+- name : questions
+- type : string[]
+- sample_value : questions[0] = "first q", questions[1] = "second q", ...
+
+- name : answers
+- type : string[]
+- sample_value : answers[0] = "first ans", answers[1] = "second ans", ...
+
+- name : class_id
+- type : ObjectID(MongoDB)
+- sample_value : "5dbfcbe972b9e372f011dda0"
+
+- name : exceeds
+- type : object[criteria/grade]
+
+- key_name : criteria
+- key_type : string
+- key_value_type : string
+
+- key_name : grade
+- key_type : string
+- key_value_type : integer
+
+- sample_key_values: exceeds[criteria] = "some criteria", exceeds[grade] = 69
+
+- name : developing
+- type : object[criteria/grade]
+
+- key_name : criteria
+- key_type : string
+- key_value_type : string
+
+- key_name : grade
+- key_type : string
+- key_value_type : integer
+
+- sample_key_values: developing[criteria] = "some criteria", developing[grade] = 69
+
+- name : fail
+- type : object[criteria/grade]
+
+- key_name : criteria
+- key_type : string
+- key_value_type : string
+
+- key_name : grade
+- key_type : string
+- key_value_type : integer
+
+- sample_key_values: fail[criteria] = "some criteria", fail[grade] = 69
+
+- name : meets
+- type : object[criteria/grade]
+
+- key_name : criteria
+- key_type : string
+- key_value_type : string
+
+- key_name : grade
+- key_type : string
+- key_value_type : integer
+
+- sample_key_values: meets[criteria] = "some criteria", meets[grade] = 69
 
 ```
   
