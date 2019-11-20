@@ -73,31 +73,29 @@ if (!config.isProduction) {
 
 // production error handler hiding stack traces
 app.use((error, req, res, next) => {
-  app.use((error, req, res, next) => {
-    // handle joi validation error
-    if (error && error.error && error.error.details) {
-      const res_body = { status: "", errors: {}, result: {} };
-      var joi_errors = error.error.details.map(value =>
-        value.message.replace(/"/g, "")
-      );
-      res_body.errors['joi'] = joi_errors;
-      res_body.status =
-        http_status.UNPROCESSABLE_ENTITY.toString() +
-        " (" +
-        http_status.getStatusText(http_status.UNPROCESSABLE_ENTITY) +
-        ")";
-      
-      res.status(http_status.UNPROCESSABLE_ENTITY).json(res_body);
-    } else {
-      res.status(error.status || 500);
-      res.json({
-        errors: {
-          message: error.message,
-          error
-        }
-      });
-    }
-  });
+  // handle joi validation error
+  if (error && error.error && error.error.details) {
+    const res_body = { status: "", errors: {}, result: {} };
+    var joi_errors = error.error.details.map(value =>
+      value.message.replace(/"/g, "")
+    );
+    res_body.errors['joi'] = joi_errors;
+    res_body.status =
+      http_status.UNPROCESSABLE_ENTITY.toString() +
+      " (" +
+      http_status.getStatusText(http_status.UNPROCESSABLE_ENTITY) +
+      ")";
+    
+    res.status(http_status.UNPROCESSABLE_ENTITY).json(res_body);
+  } else {
+    res.status(error.status || 500);
+    res.json({
+      errors: {
+        message: error.message,
+        error
+      }
+    });
+  }
 });
 
 // start server
