@@ -101,6 +101,31 @@ function createCourse({
 	})
 }
 
+function getAllClasses({
+	token,
+}) {
+	return new Promise((resolve, reject) => {
+		const request = {
+			url: baseUrl + '/classes/all',
+			type: 'GET',
+			dataType: 'json',
+			contentType: 'application/json',
+			headers: { 'Authorization': 'Bearer ' + token },
+			success: ({ result }) => {
+				resolve(result)
+			},
+			error: reject,
+		}
+		$.ajax(request)
+	})
+}
+
+function createClass({
+	token,
+}) {
+	
+}
+
 function getIndicators({
 	token,
 }) {
