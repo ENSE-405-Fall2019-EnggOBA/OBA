@@ -19,8 +19,8 @@ function registerUser({
 					password,
 				},
 			}),
-			success: ({ user }) => {
-				resolve(user)
+			success: ({ result }) => {
+				resolve(result)
 			},
 			error: reject,
 		}
@@ -44,8 +44,8 @@ function loginUser({
 					password,
 				},
 			}),
-			success: ({ user }) => {
-				resolve(user)
+			success: ({ result }) => {
+				resolve(result)
 			},
 			error: reject,
 		}
