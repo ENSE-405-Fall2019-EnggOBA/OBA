@@ -1,4 +1,4 @@
-const baseUrl = 'https://maciag.ursse.org/api/api'
+const baseUrl = 'https://maciag.ursse.org/api'
 
 function registerUser({
 	email,
