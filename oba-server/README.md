@@ -245,6 +245,7 @@ Login
 * **Required:**
 
   * **Body:**
+  
       `user=[{email,password}]`
   
       `email=[string]`
@@ -1188,8 +1189,6 @@ GetAll
   
 * **Required:**
 
-    * **Body:**
-
   
 * **Optional:**
   
@@ -1325,47 +1324,47 @@ Update
 
     * **Body:**
     
-    `graduateattr=[string]`
+       `graduateattr=[string]`
 
-    `indicator=[string]`
+       `indicator=[string]`
     
-    `exceeds_doc=[file]`
+       `exceeds_doc=[file]`
     
-    `meets_doc=[file]`
+       `meets_doc=[file]`
     
-    `developing_doc=[file]`
+       `developing_doc=[file]`
     
-    `fail_doc=[file]`
+       `fail_doc=[file]`
     
-    `questions=[string[]]`
+       `questions=[string[]]`
     
-    `answers=[string[]]`
+       `answers=[string[]]`
 
-    `class_id=[ObjectId]`
+       `class_id=[ObjectId]`
     
-    `exceeds=[{criteria,grade}]`
+       `exceeds=[{criteria,grade}]`
     
-    `exceeds[criteria]=[string]`
+       `exceeds[criteria]=[string]`
     
-    `exceeds[grade]=[string]`
+       `exceeds[grade]=[string]`
     
-    `meets=[{criteria,grade}]`
+       `meets=[{criteria,grade}]`
     
-    `meets[criteria]=[string]`
+       `meets[criteria]=[string]`
     
-    `meets[grade]=[string]`
+       `meets[grade]=[string]`
     
-    `developing=[{criteria,grade}]`
+       `developing=[{criteria,grade}]`
     
-    `developing[criteria]=[string]`
+       `developing[criteria]=[string]`
     
-    `developing[grade]=[string]`
+       `developing[grade]=[string]`
     
-    `fail=[{criteria,grade}]`
+       `fail=[{criteria,grade}]`
     
-    `fail[criteria]=[string]`
+       `fail[criteria]=[string]`
     
-    `fail[grade]=[string]`
+       `fail[grade]=[string]`
   
 * **Optional:**
   
