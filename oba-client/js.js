@@ -122,8 +122,35 @@ function getAllClasses({
 
 function createClass({
 	token,
+	name,
+	faculty,
+	term,
+	year,
+	status,
 }) {
-	
+	return new Promise((resolve, reject) => {
+		const request = {
+			url: baseUrl + '/classes',
+			type: 'POST',
+			dataType: 'json',
+			contentType: 'application/json',
+			headers: { 'Authorization': 'Bearer ' + token },
+			data: JSON.stringify({
+				class: {
+					name,
+					faculty,
+					term,
+					year,
+					status,
+				},
+			}),
+			success: ({ result }) => {
+				resolve(result)
+			},
+			error: reject,
+		}
+		$.ajax(request)
+	})
 }
 
 function getIndicators({
