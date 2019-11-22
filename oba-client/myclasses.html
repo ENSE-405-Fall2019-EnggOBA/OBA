@@ -7,6 +7,11 @@
 <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 </head>
+
+<script type="text/javascript">
+
+</script>
+
 <body>
 
     <header class="header">
@@ -51,17 +56,18 @@
 	
 	</div>
 	
+	<div id="myGroup">
 	
 	<div class="float-left">
-		<button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Search</button>
+		<button class="btn btn-outline-primary dropdown" type="button" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseExample1">Search</button>
 	</div>
 
 	<div class="float-right">
-		<button onclick="location.href='addclass.html'" class="btn btn-outline-primary" type="submit">Add Class</button>
+		<button class="btn btn-outline-primary dropdown" type="button" data-toggle="collapse" data-target="#collapseAddClass" aria-expanded="false" aria-controls="collapseExample2">Add Class</button>
 	</div>
 	
 	
-	<div class="collapse float-left mt-3 mb-3 w-100" id="collapseExample" >
+	<div class="collapse float-left mt-3 mb-3 w-100" id="collapseSearch" data-parent="#myGroup">
 		<div class="card card-body">
 		<div class="row align-items-center">
 
@@ -79,7 +85,7 @@
 		
 	<div class="col-sm">
 		<div class="form-group row">
-      	<input type="text" class="form-control" id="inputStatus" placeholder="Status">
+		<input type="text" class="form-control" id="inputTerm" placeholder="Term">
 		</div>
 		</div>
 	
@@ -91,11 +97,56 @@
 
 <div class="col-sm">
 		<div class="form-group row">
-      	<input type="text" class="form-control" id="inputTerm" placeholder="Term">
+      	<input type="text" class="form-control" id="inputStatus" placeholder="Status">
 		</div>
+		</div>
+		
+		</div>
+
+	</div>
+	</div>
+	
+	
+		<div class="collapse float-left mt-3 mb-3 w-100" id="collapseAddClass" data-parent="#myGroup">
+		<div class="card card-body">
+		<div class="row align-items-center">
+
+	<div class="col" >
+		<div class="form-group row">
+      	<input type="text" class="form-control" id="inputFacultyName" placeholder="Faculty Name">
+		</div>
+		</div>
+		
+	<div class="col">
+		<div class="form-group row">
+      	<input type="text" class="form-control" id="inputCourseNumber" placeholder="Course Number">
+		</div>
+		</div>
+		
+	<div class="col">
+		<div class="form-group row">
+		<input type="text" class="form-control" id="inputTerm" placeholder="Term">
+		</div>
+		</div>
+	
+	<div class="col">
+		<div class="form-group row">
+      	<input type="text" class="form-control" id="inputYear" placeholder="Year">
 		</div>
 		</div>
 
+<div class="col">
+		<div class="form-group row">
+      	<input type="text" class="form-control" id="inputStatus" placeholder="Status">
+		</div>
+		</div>
+<div class="col">
+	<div class="form-group row float-right">
+		<button type="submit" class="btn btn-primary" onclick="location.href='addclass.html'">Submit</button>
+		</div>
+</div>
+</div>
+</div>
 	</div>
 	</div>
 
@@ -110,21 +161,37 @@
 				<th scope="col">Course Number</th>
 				<th scope="col">Term</th>
 				<th scope="col">Year</th>
-				<th scope="col">Comments</th>
+				<th scope="col">Status</th>
 			</tr>
 			</thead>
 			
 			<tbody>
 			<tr  class="table-success">
-				<td>1</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
+				<td>1. Software Systems Engineering</td>
+				<td>ENSE374</td>
+				<td>Fall</td>
+				<td>2019</td>
+				<td>Active</td>
+			</tr>
+			
+			<tr class="table-success">
+				<td>2. Software Systems Engineering</td>
+				<td>ENEL568</td>
+				<td>Fall</td>
+				<td>2019</td>
+				<td>Active</td>
 			</tr>
 			
 			<tr class="table-danger">
-				<td>2</td>
+				<td>3. Electronic Systems Engineering</td>
+				<td>ENEL564</td>
+				<td>Fall</td>
+				<td>2019</td>
+				<td>Inactive</td>
+			</tr>
+			
+			<tr>
+				<td>4. </td>
 				<td></td>
 				<td></td>
 				<td></td>
@@ -132,7 +199,7 @@
 			</tr>
 			
 			<tr>
-				<td>3</td>
+				<td>5. </td>
 				<td></td>
 				<td></td>
 				<td></td>
@@ -140,7 +207,7 @@
 			</tr>
 			
 			<tr>
-				<td>4</td>
+				<td>6. </td>
 				<td></td>
 				<td></td>
 				<td></td>
@@ -148,23 +215,7 @@
 			</tr>
 			
 			<tr>
-				<td>5</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			
-			<tr>
-				<td>6</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			
-			<tr>
-				<td>7</td>
+				<td>7. </td>
 				<td></td>
 				<td></td>
 				<td></td>
