@@ -1,0 +1,32 @@
+{
+    "premissions" : {
+      "read_local" : 1,
+      "write_local" : 2,
+      "read_local_write_local" : 3,
+      "read_faculty": 4,
+      "read_faculty_write_local": 5,
+      "read_all" : 8
+    },
+    "role_access_levels" : {
+      "Professor" : 3,
+      "Program Chair" : 5,
+      "Staff" : 8
+    },
+    "late_policies": [
+      {
+        "Fall": {
+          "Month": "January",
+          "Day": 1
+        },
+        "Winter": {
+          "Month": "May",
+          "Day": 1
+        },
+        "Spring/Summer": {
+          "Month": "September",
+          "Day": 1
+        }
+      }
+    ]
+  }
+  

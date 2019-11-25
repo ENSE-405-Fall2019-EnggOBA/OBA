@@ -4,9 +4,19 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const errorhandler = require("errorhandler");
 const config = require("./config");
-const http_status = require("http-status-codes");
-
+const http_utils = require("./utils/web");
 const app = express();
+
+const Agenda = require("agenda");
+const agenda = new Agenda({
+  db: {
+    address: config.mongodbUri,
+    collection: "Agenda_Deferred_Jobs",
+    options: { useNewUrlParser: true, useUnifiedTopology: true }
+  }
+});
+
+require("./agenda/agenda-late-notifications")(agenda);
 
 app.use(cors());
 app.use(require("morgan")("dev"));
@@ -44,20 +54,18 @@ app.use((req, res, next) => {
 // development error handler showing stack traces
 if (!config.isProduction) {
   app.use((error, req, res, next) => {
-    // handle joi validation error
+    // handle joi validation errors
     if (error && error.error && error.error.details) {
-      const res_body = { status: "", errors: {}, result: {} };
-      var joi_errors = error.error.details.map(value =>
-        value.message.replace(/"/g, "")
+      const res_body = { status: "", errors: [], result: {} };
+      console.log(error.error.details);
+      http_utils.responsify(
+        res_body,
+        http_utils.FLAG_INVALID_INPUT,
+        [],
+        error.error.details,
+        res
       );
-      res_body.errors['joi'] = joi_errors;
-      res_body.status =
-        http_status.UNPROCESSABLE_ENTITY.toString() +
-        " (" +
-        http_status.getStatusText(http_status.UNPROCESSABLE_ENTITY) +
-        ")";
-      
-      res.status(http_status.UNPROCESSABLE_ENTITY).json(res_body);
+      res.json(res_body);
     } else {
       console.log(error.stack);
       res.status(error.status || 500);
@@ -72,31 +80,30 @@ if (!config.isProduction) {
 }
 
 // production error handler hiding stack traces
-app.use((error, req, res, next) => {
-  // handle joi validation error
-  if (error && error.error && error.error.details) {
-    const res_body = { status: "", errors: {}, result: {} };
-    var joi_errors = error.error.details.map(value =>
-      value.message.replace(/"/g, "")
-    );
-    res_body.errors['joi'] = joi_errors;
-    res_body.status =
-      http_status.UNPROCESSABLE_ENTITY.toString() +
-      " (" +
-      http_status.getStatusText(http_status.UNPROCESSABLE_ENTITY) +
-      ")";
-    
-    res.status(http_status.UNPROCESSABLE_ENTITY).json(res_body);
-  } else {
-    res.status(error.status || 500);
-    res.json({
-      errors: {
-        message: error.message,
-        error
-      }
-    });
-  }
-});
+if (config.isProduction) {
+  app.use((error, req, res, next) => {
+    // handle joi validation error
+    if (error && error.error && error.error.details) {
+      const res_body = { status: "", errors: [], result: {} };
+      http_utils.responsify(
+        res_body,
+        http_utils.FLAG_INVALID_INPUT,
+        [],
+        error.error.details,
+        res
+      );
+      res.json(res_body);
+    } else {
+      res.status(error.status || 500);
+      res.json({
+        errors: {
+          message: error.message,
+          error
+        }
+      });
+    }
+  });
+}
 
 // start server
 const server = app.listen(config.port, () => {

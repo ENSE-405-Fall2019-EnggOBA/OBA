@@ -1,23 +1,24 @@
-const jwt = require('express-jwt');
-const { secret } = require('../config');
+const jwt = require("express-jwt");
+const { secret } = require("../config");
 const http_status = require("http-status-codes");
 const logger = require("../utils/logger");
+const http_utils = require("../utils/web");
 
 function getToken(req) {
-  const { authorization } = req.headers
+  const { authorization } = req.headers;
   if (!authorization) {
-      return null
+    return null;
   }
-  const [ method, token ] = authorization.split(' ')
-  if ([ 'Token', 'Bearer' ].includes(method)) {
-      return token
+  const [method, token] = authorization.split(" ");
+  if (["Token", "Bearer"].includes(method)) {
+    return token;
   }
-  return null
+  return null;
 }
 
 function guard(err, req, res, next) {
   if (err.name === "UnauthorizedError") {
-    const res_body = { status: "", errors: {}, result: {} };
+    const res_body = { status: "", errors: [], result: {} };
     res.status(http_status.UNAUTHORIZED);
     logger.error(
       `[${req.protocol +
@@ -27,11 +28,14 @@ function guard(err, req, res, next) {
         http_status.UNAUTHORIZED
       )}`
     );
-    res_body.errors['auth'] = "Unauthorized access to protected route.";
-    res_body.status = http_status.UNAUTHORIZED.toString() +
-    " (" +
-    http_status.getStatusText(http_status.UNAUTHORIZED) +
-    ")";
+
+    http_utils.responsify(
+      res_body,
+      http_utils.FLAG_UNAUTH_ACCESS,
+      [],
+      "Unauthorized access to protected route.",
+      res
+    );
     return res.json(res_body);
   } else next();
 }
@@ -40,7 +44,7 @@ module.exports = {
   guard,
   required: jwt({
     secret,
-    userProperty: 'currentUser',
+    userProperty: "currentUser",
     getToken
   })
 };

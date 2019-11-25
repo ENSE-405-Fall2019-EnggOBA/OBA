@@ -14,20 +14,22 @@ const multer_multi_doc_upload = multer({
     cb(null, true);
   },
   dest: "uploads/docs"
-}).fields([
-  { name: "exceeds_doc", maxCount: 1 },
-  { name: "meets_doc", maxCount: 1 },
-  { name: "developing_doc", maxCount: 1 },
-  { name: "fail_doc", maxCount: 1 }
-]);
+}).any();
 
-function upload_promise(multer_upload_sig, req, res) {
-  return new Promise(function(resolve, reject) {
-    multer_upload_sig(req, res, err => {
-      if (err !== undefined) return reject(err);
-      resolve(req.files);
-    });
-  });
-}
+const multer_single_file_upload = multer({
+  fileFilter: (req, file, cb) => {
+    if (
+      !file.mimetype.includes("image/bmp") &&
+      !file.mimetype.includes("image/jpeg") &&
+      !file.mimetype.includes("image/png")
+    )
+      return cb(
+        new multer.MulterError("Invalid file ext supplied for avatar"),
+        false
+      );
+    cb(null, true);
+  },
+  dest: "uploads/avatars"
+}).fields([{ name: "avatar", maxCount: 1 }]);
 
-module.exports = { upload_promise, multer_multi_doc_upload };
+module.exports = { multer_multi_doc_upload, multer_single_file_upload };

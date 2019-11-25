@@ -6,16 +6,46 @@ const add_class_schema = Joi.object({
   class: {
     name: shared_schemas.course_key,
     faculty: shared_schemas.faculty_key,
-    status: Joi.string()
-      .valid("active", "inactive")
-      .required(),
     term: Joi.string()
-      .valid("Fall", "Winter", "Spring", "Summer")
+      .valid("Fall", "Winter", "Spring/Summer")
       .required(),
     year: Joi.number()
       .equal(new Date().getFullYear())
       .required()
   }
+});
+
+const update_body_doc_schema_opt_sub = Joi.object({
+  criteria: Joi.string()
+    .max(500)
+    .optional(),
+  grade: Joi.number()
+    .min(0)
+    .max(100)
+    .optional()
+});
+
+const data_object_opt_schema = Joi.object({
+  grad_attribute: Joi.string()
+    .max(50)
+    .optional(),
+  indicator: Joi.string()
+    .max(50)
+    .optional(),
+  answers: Joi.array()
+    .items(Joi.string().max(150))
+    .when("questions", {
+      is: Joi.array(),
+      then: Joi.array().max(Joi.ref("questions.length"))
+    })
+    .optional(),
+  questions: Joi.array()
+    .items(Joi.string().max(500))
+    .optional(),
+  exceeds: update_body_doc_schema_opt_sub,
+  meets: update_body_doc_schema_opt_sub,
+  developing: update_body_doc_schema_opt_sub,
+  fail: update_body_doc_schema_opt_sub
 });
 
 const update_body_doc_schema_sub = Joi.object({
@@ -28,9 +58,8 @@ const update_body_doc_schema_sub = Joi.object({
     .required()
 });
 
-const update_body_schema = Joi.object({
-  class_id: Joi.objectId().required(),
-  graduateattr: Joi.string()
+const data_object_schema = Joi.object({
+  grad_attribute: Joi.string()
     .max(50)
     .required(),
   indicator: Joi.string()
@@ -46,10 +75,48 @@ const update_body_schema = Joi.object({
   questions: Joi.array()
     .items(Joi.string().max(500))
     .required(),
+
   exceeds: update_body_doc_schema_sub,
   meets: update_body_doc_schema_sub,
   developing: update_body_doc_schema_sub,
   fail: update_body_doc_schema_sub
+});
+
+const data_object_array_opt_schema = Joi.array().items(data_object_opt_schema);
+const data_object_array_schema = Joi.array().items(data_object_schema);
+
+const update_body_schema = Joi.object({
+  course_name: shared_schemas.course_key,
+  term: Joi.alternatives().when("complete_flag", {
+    is: true,
+    then: Joi.alternatives()
+      .try(Joi.string().valid("Fall", "Winter", "Spring/Summer"))
+      .required(),
+    otherwise: Joi.alternatives()
+      .try(Joi.string().valid("Fall", "Winter", "Spring/Summer"))
+      .optional()
+  }),
+  faculty: shared_schemas.faculty_key,
+  year: Joi.alternatives().when("complete_flag", {
+    is: true,
+    then: Joi.alternatives()
+      .try(Joi.number().equal(new Date().getFullYear()))
+      .required(),
+    otherwise: Joi.alternatives()
+      .try(Joi.number().equal(new Date().getFullYear()))
+      .optional()
+  }),
+
+  complete_flag: Joi.boolean().required(), // hidden field value passed to indicate if form is complete
+  data: Joi.alternatives().when("complete_flag", {
+    is: true,
+    then: Joi.alternatives()
+      .try(data_object_array_schema)
+      .required(),
+    otherwise: Joi.alternatives()
+      .try(data_object_array_opt_schema)
+      .optional()
+  })
 });
 
 const get_id_body_schema = Joi.object({
