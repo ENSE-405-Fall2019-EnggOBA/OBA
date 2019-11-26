@@ -7,8 +7,8 @@ const Course = mongoose.model("Course");
 function get_by_id(req, res) {
   const res_body = { status: "", errors: [], result: {} };
   Course.findById(req.body.course.object_id)
-    .exec()
     .lean()
+    .exec()
     .then(record => {
       if (!record)
         throw http_utils.mongoose_promise_chain_error("invalid course id");
@@ -33,8 +33,8 @@ function get_by_id(req, res) {
 function get_by_name(req, res) {
   const res_body = { status: "", errors: [], result: {} };
   Course.findOne({ name: req.body.course.name })
-    .exec()
     .lean()
+    .exec()
     .then(record => {
       if (!record)
         throw http_utils.mongoose_promise_chain_error("invalid course name");
@@ -55,8 +55,8 @@ function get_by_name(req, res) {
 function get_all(req, res) {
   const res_body = { status: "", errors: [], result: {} };
   Course.find({})
-    .exec()
     .lean()
+    .exec()
     .then(records => {
       if (!records)
         throw http_utils.mongoose_promise_chain_error(

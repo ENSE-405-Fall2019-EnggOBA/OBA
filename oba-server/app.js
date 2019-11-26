@@ -3,6 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const errorhandler = require("errorhandler");
+require("dotenv-extended").config();
 const config = require("./config");
 const http_utils = require("./utils/web");
 const app = express();
@@ -16,7 +17,7 @@ const agenda = new Agenda({
   }
 });
 
-require("./agenda/agenda-late-notifications")(agenda);
+require("./agenda-late-notifications")(agenda);
 
 app.use(cors());
 app.use(require("morgan")("dev"));

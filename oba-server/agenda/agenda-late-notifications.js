@@ -1,10 +1,10 @@
-const dates_hash = require("../utils/dates");
+const dates_hash = require("./utils/dates");
 
 module.exports = agenda => {
   agenda.on("ready", () => {
     const {
       update_late_class_statuses
-    } = require("../routes/api/services/class-services-helpers");
+    } = require("./routes/api/services/class-services-helpers");
 
     const json_late_policies = require("./data/misc-data.json")[
       "late_policies"

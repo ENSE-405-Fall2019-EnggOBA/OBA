@@ -96,7 +96,55 @@ Notes
 	|                   	| Professor 	| Program Chair 	| Staff 	|
 	|:-----------------:	|:---------:	|:-------------:	|:-----:	|
 	| Premission Levels 	|     3     	|       5       	|   8   	|
-	    
+	
+    The values can be configured via the misc-data.json:
+    ```json
+        "premissions" : {
+      "read_local" : 1,
+      "write_local" : 2,
+      "read_local_write_local" : 3,
+      "read_faculty": 4,
+      "read_faculty_write_local": 5,
+      "read_all" : 8
+    },
+    "role_access_levels" : {
+      "Professor" : 3,
+      "Program Chair" : 5,
+      "Staff" : 8
+    }
+    ``` 
+	
+* **Status Updates:**
+
+    Class documents are automatically updated on certain time periods yearily based on the term. At the time listed below all class documents will be scanned in the database for the current term to see if any need to be marked with the status field set to "Late".
+    
+    By default they are:
+    
+    |       Term      	|  Fall 	| Winter 	| Spring/Summer 	|
+    |:---------------:	|:-----:	|:------:	|:-------------:	|
+    | Late Check Date 	| Jan 1 	|  May 1 	|     Sept 1    	|
+    
+    The values can be configured via the misc-data.json:
+    
+```json 
+    "late_policies": [
+      {
+        "Fall": {
+          "Month": "January",
+          "Day": 1
+        },
+        "Winter": {
+          "Month": "May",
+          "Day": 1
+        },
+        "Spring/Summer": {
+          "Month": "September",
+          "Day": 1
+        }
+      }
+    ]
+```
+
 Users
 ============
 Register
@@ -395,8 +443,7 @@ Create
 { 
    "course":{ 
       "name":"ENEL564",
-      "faculty":"Electronic Systems Engineering",
-      "status":"active"
+      "faculty":"Electronic Systems Engineering"
    }
 }
 ```
@@ -405,8 +452,7 @@ Create
 { 
    "course":{ 
       "name":"ENSE420",
-      "faculty":"Software Systems Engineering",
-      "status":"active"
+      "faculty":"Software Systems Engineering"
    }
 }
 ```
@@ -420,9 +466,9 @@ Create
     "result": {
         "_id": "5ddb8a4dcf136d5ab0307954",
         "faculty": "Software Systems Engineering",
-        "name": "ENSE350",
-        "createdAt": "2019-11-25T08:01:17.092Z",
-        "updatedAt": "2019-11-25T08:01:17.092Z",
+        "name": "ENSE320",
+        "createdAt": "2019-11-25T23:59:52.432Z",
+        "updatedAt": "2019-11-25T23:59:52.432Z",
         "__v": 0
     }
 }
@@ -534,10 +580,9 @@ GetName
     "result": {
         "_id": "5dbfbf4c7b4d955ef486e2ba",
         "faculty": "Electronic Systems Engineering",
-        "name": "ENEL564",
-        "status": "active",
-        "createdAt": "2019-11-04T22:01:26.993Z",
-        "updatedAt": "2019-11-04T22:01:26.993Z",
+        "name": "ENEL150",
+        "createdAt": "2019-11-25T23:59:52.432Z",
+        "updatedAt": "2019-11-25T23:59:52.432Z",
         "__v": 0
     }
 }
@@ -616,8 +661,8 @@ Sample response for staff:
         {
             "_id": "5dbfbf4c7b4d955ef486e2ba",
             "faculty": "Electronic Systems Engineering",
-	    "name": "ENEL564",
-            "status": "Incomplete",
+            "name": "ENEL564",
+            "status": "active",
             "createdAt": "2019-11-04T06:00:56.121Z",
             "updatedAt": "2019-11-04T06:00:56.121Z",
             "__v": 0
@@ -626,7 +671,7 @@ Sample response for staff:
             "_id": "5dbfc6aea326183894be54b7",
             "faculty": "Software Systems Engineering",
             "name": "ENSE568",
-            "status": "Incomplete",
+            "status": "active",
             "createdAt": "2019-11-04T06:35:26.722Z",
             "updatedAt": "2019-11-04T06:35:26.722Z",
             "__v": 0
@@ -635,7 +680,7 @@ Sample response for staff:
             "_id": "5dc09fb687b1d9760494352a",
             "faculty": "Electronic Systems Engineering",
             "name": "ENEL590",
-            "status": "Incomplete",
+            "status": "active",
             "createdAt": "2019-11-04T22:01:26.993Z",
             "updatedAt": "2019-11-04T22:01:26.993Z",
             "__v": 0
@@ -643,69 +688,24 @@ Sample response for staff:
         {
             "_id": "5ddb8a4dcf136d5ab0307954",
             "faculty": "Software Systems Engineering",
-            "name": "Incomplete",
+            "name": "ENSE350",
             "createdAt": "2019-11-25T08:01:17.092Z",
             "updatedAt": "2019-11-25T08:01:17.092Z",
             "__v": 0
-        }
-    ]
-}
-```
-
-OR
-
-Sample response for a program chair:
-(can see own class and other prof classes in the same faculty)
-
-```json
-{
-    "status": "200 (OK)",
-    "errors": [],
-    "result": [
-        {
-            "_id": "5dbfbf4c7b4d955ef486e2ba",
-            "faculty": "Electronic Systems Engineering",
-            "name": "ENEL564",
-            "status": "active",
-            "createdAt": "2019-11-04T06:00:56.121Z",
-            "updatedAt": "2019-11-04T06:00:56.121Z",
-            "__v": 0
         },
         {
-            "_id": "5dc09fb687b1d9760494352a",
+            "_id": "5ddc6af8b2f47a80184c4292",
             "faculty": "Electronic Systems Engineering",
-            "name": "ENEL590",
-            "status": "active",
-            "createdAt": "2019-11-04T22:01:26.993Z",
-            "updatedAt": "2019-11-04T22:01:26.993Z",
+            "name": "ENEL359",
+            "createdAt": "2019-11-25T23:59:52.432Z",
+            "updatedAt": "2019-11-25T23:59:52.432Z",
             "__v": 0
         }
     ]
 }
 ```
 
-OR
-
-Sample response for a professor:
-(can only see their own classes)
-
-```json
-{
-    "status": "200 (OK)",
-    "errors": [],
-    "result": [
-        {
-            "_id": "5dc09fb687b1d9760494352a",
-            "faculty": "Electronic Systems Engineering",
-            "name": "ENEL590",
-            "status": "active",
-            "createdAt": "2019-11-04T22:01:26.993Z",
-            "updatedAt": "2019-11-04T22:01:26.993Z",
-            "__v": 0
-        }
-    ]
-}
-```
+*results vary based on the premission role of the user*
 
 * **Error Response:**
 
@@ -763,7 +763,7 @@ GetAllName
 ```json  
 { 
    "class":{ 
-      "name":"ENSE350"
+      "name":"ENSE110"
    }
 }
 ```
@@ -780,36 +780,36 @@ GetAllName
             "course_id": {
                 "_id": "5ddb8a4dcf136d5ab0307954",
                 "faculty": "Software Systems Engineering",
-                "name": "ENSE350",
-                "createdAt": "2019-11-25T08:01:17.092Z",
-                "updatedAt": "2019-11-25T08:01:17.092Z",
+                "name": "ENSE110",
+                "createdAt": "2019-11-04T06:00:56.121Z",
+                "updatedAt": "2019-11-04T06:00:56.121Z",
                 "__v": 0
             },
             "instructor_id": "5dd8ca8b6cc68874201ec5f8",
             "term": "Fall",
             "__v": 2,
-            "createdAt": "2019-11-25T08:38:12.478Z",
-            "updatedAt": "2019-11-25T08:43:23.543Z",
+            "createdAt": "2019-11-04T06:00:56.121Z",
+            "updatedAt": "2019-11-04T06:00:56.121Z",
             "data": [
                 {
                     "evaluation_report": {
                         "exceeds": {
-                            "criteria": "does he fly?",
+                            "criteria": "criteria text here",
                             "grade": 32,
                             "documents": "uploads\\docs\\98a1ed3414f41a89546816faa5a7395f"
                         },
                         "meets": {
-                            "criteria": "does he tru?",
+                            "criteria": "criteria text here",
                             "grade": 31,
                             "documents": ""
                         },
                         "developing": {
-                            "criteria": "wow what a nut?",
+                            "criteria": "criteria text here",
                             "grade": 33,
                             "documents": ""
                         },
                         "fail": {
-                            "criteria": "does he cry?",
+                            "criteria": "criteria text here",
                             "grade": 90,
                             "documents": ""
                         }
@@ -817,20 +817,20 @@ GetAllName
                     "_id": "5ddb92f480cfea7ef0d502ad",
                     "questions_answers": [
                         {
-                            "question": "wow",
-                            "answer": "wew"
+                            "question": "some question",
+                            "answer": "some ans"
                         },
                         {
-                            "question": "dew",
-                            "answer": "wew"
+                            "question": "some question",
+                            "answer": "some ans"
                         },
                         {
-                            "question": "cew",
-                            "answer": "wew"
+                            "question": "some question",
+                            "answer": "some ans"
                         },
                         {
-                            "question": "wew",
-                            "answer": "wew"
+                            "question": "some question",
+                            "answer": "some ans"
                         }
                     ],
                     "grad_attribute": "CriticalThinking",
@@ -843,36 +843,36 @@ GetAllName
             "course_id": {
                 "_id": "5ddb8a4dcf136d5ab0307954",
                 "faculty": "Software Systems Engineering",
-                "name": "ENSE350",
-                "createdAt": "2019-11-25T08:01:17.092Z",
-                "updatedAt": "2019-11-25T08:01:17.092Z",
+                "name": "ENSE110",
+                "createdAt": "2019-11-04T06:00:56.121Z",
+                "updatedAt": "2019-11-04T06:00:56.121Z",
                 "__v": 0
             },
             "instructor_id": "5dd8ca8b6cc68874201ec5f8",
             "term": "Spring/Summer",
             "__v": 2,
-            "createdAt": "2019-11-25T08:49:08.963Z",
-            "updatedAt": "2019-11-25T09:24:53.131Z",
+            "createdAt": "2019-11-04T06:00:56.121Z",
+            "updatedAt": "2019-11-04T06:00:56.121Z",
             "data": [
                 {
                     "evaluation_report": {
                         "exceeds": {
-                            "criteria": "does he fly?",
+                            "criteria": "criteria text here",
                             "grade": 32,
                             "documents": "uploads\\docs\\99cdf27bb2247d3a79ba888ffd6195ca"
                         },
                         "meets": {
-                            "criteria": "does he tru?",
+                            "criteria": "criteria text here",
                             "grade": 31,
                             "documents": ""
                         },
                         "developing": {
-                            "criteria": "wow what a nut?",
+                            "criteria": "criteria text here",
                             "grade": 33,
                             "documents": ""
                         },
                         "fail": {
-                            "criteria": "does he cry?",
+                            "criteria": "criteria text here",
                             "grade": 90,
                             "documents": ""
                         }
@@ -880,20 +880,20 @@ GetAllName
                     "_id": "5ddb95856bfb4bb3b838b701",
                     "questions_answers": [
                         {
-                            "question": "wow",
-                            "answer": "wew"
+                            "question": "question here",
+                            "answer": "answer here"
                         },
                         {
-                            "question": "dew",
-                            "answer": "wew"
+                            "question": "question here",
+                            "answer": "answer here"
                         },
                         {
-                            "question": "cew",
-                            "answer": "wew"
+                            "question": "question here",
+                            "answer": "answer here"
                         },
                         {
-                            "question": "wew",
-                            "answer": "wew"
+                            "question": "answer here",
+                            "answer": "answer here"
                         }
                     ],
                     "grad_attribute": "CriticalThinking",
@@ -1003,36 +1003,36 @@ GetAll
             "course_id": {
                 "_id": "5ddb8a4dcf136d5ab0307954",
                 "faculty": "Software Systems Engineering",
-                "name": "ENSE350",
-                "createdAt": "2019-11-25T08:01:17.092Z",
-                "updatedAt": "2019-11-25T08:01:17.092Z",
+                "name": "ENSE110",
+                "createdAt": "2019-11-04T06:00:56.121Z",
+                "updatedAt": "2019-11-04T06:00:56.121Z",
                 "__v": 0
             },
             "instructor_id": "5dd8ca8b6cc68874201ec5f8",
             "term": "Fall",
             "__v": 2,
-            "createdAt": "2019-11-25T08:38:12.478Z",
-            "updatedAt": "2019-11-25T08:43:23.543Z",
+            "createdAt": "2019-11-04T06:00:56.121Z",
+            "updatedAt": "2019-11-04T06:00:56.121Z",
             "data": [
                 {
                     "evaluation_report": {
                         "exceeds": {
-                            "criteria": "does he fly?",
+                            "criteria": "criteria text here",
                             "grade": 32,
                             "documents": "uploads\\docs\\98a1ed3414f41a89546816faa5a7395f"
                         },
                         "meets": {
-                            "criteria": "does he tru?",
+                            "criteria": "criteria text here",
                             "grade": 31,
                             "documents": ""
                         },
                         "developing": {
-                            "criteria": "wow what a nut?",
+                            "criteria": "criteria text here",
                             "grade": 33,
                             "documents": ""
                         },
                         "fail": {
-                            "criteria": "does he cry?",
+                            "criteria": "criteria text here",
                             "grade": 90,
                             "documents": ""
                         }
@@ -1040,20 +1040,20 @@ GetAll
                     "_id": "5ddb92f480cfea7ef0d502ad",
                     "questions_answers": [
                         {
-                            "question": "wow",
-                            "answer": "wew"
+                            "question": "question here",
+                            "answer": "answer here"
                         },
                         {
-                            "question": "dew",
-                            "answer": "wew"
+                            "question": "question here",
+                            "answer": "answer here"
                         },
                         {
-                            "question": "cew",
-                            "answer": "wew"
+                            "question": "question here",
+                            "answer": "answer here"
                         },
                         {
-                            "question": "wew",
-                            "answer": "wew"
+                            "question": "answer here",
+                            "answer": "answer here"
                         }
                     ],
                     "grad_attribute": "CriticalThinking",
@@ -1073,36 +1073,36 @@ GetAll
             "course_id": {
                 "_id": "5dc09fb687b1d9760494352a",
                 "faculty": "Electronic Systems Engineering",
-                "name": "ENEL590",
+                "name": "ENEL201",
                 "status": "active",
-                "createdAt": "2019-11-04T22:01:26.993Z",
-                "updatedAt": "2019-11-04T22:01:26.993Z",
+                "createdAt": "2019-11-04T06:00:56.121Z",
+                "updatedAt": "2019-11-04T06:00:56.121Z",
                 "__v": 0
             },
             "instructor_id": "5dd8ca8b6cc68874201ec5f8",
             "__v": 1,
-            "createdAt": "2019-11-25T08:39:42.084Z",
-            "updatedAt": "2019-11-25T08:39:42.160Z",
+            "createdAt": "2019-11-04T06:00:56.121Z",
+            "updatedAt": "2019-11-04T06:00:56.121Z",
             "data": [
                 {
                     "evaluation_report": {
                         "exceeds": {
-                            "criteria": "does he fly?",
+                            "criteria": "criteria text here",
                             "grade": 32,
                             "documents": "uploads\\docs\\5c0c102f685cdd744668158650d8dd2c"
                         },
                         "meets": {
-                            "criteria": "does he tru?",
+                            "criteria": "criteria text here",
                             "grade": 31,
                             "documents": ""
                         },
                         "developing": {
-                            "criteria": "wow what a nut?",
+                            "criteria": "criteria text here",
                             "grade": 33,
                             "documents": ""
                         },
                         "fail": {
-                            "criteria": "does he cry?",
+                            "criteria": "criteria text here",
                             "grade": 90,
                             "documents": ""
                         }
@@ -1110,20 +1110,20 @@ GetAll
                     "_id": "5ddb934e80cfea7ef0d502af",
                     "questions_answers": [
                         {
-                            "question": "wow",
-                            "answer": "wew"
+                            "question": "some question",
+                            "answer": "some ans"
                         },
                         {
-                            "question": "dew",
-                            "answer": "wew"
+                            "question": "some question",
+                            "answer": "some ans"
                         },
                         {
-                            "question": "cew",
-                            "answer": "wew"
+                            "question": "some question",
+                            "answer": "some ans"
                         },
                         {
-                            "question": "wew",
-                            "answer": "wew"
+                            "question": "some question",
+                            "answer": "some ans"
                         }
                     ],
                     "grad_attribute": "CriticalThinking",
@@ -1143,36 +1143,36 @@ GetAll
             "course_id": {
                 "_id": "5dbfc6aea326183894be54b7",
                 "faculty": "Software Systems Engineering",
-                "name": "ENSE568",
+                "name": "ENEL333",
                 "status": "active",
-                "createdAt": "2019-11-04T06:35:26.722Z",
-                "updatedAt": "2019-11-04T06:35:26.722Z",
+                "createdAt": "2019-11-04T06:00:56.121Z",
+                "updatedAt": "2019-11-04T06:00:56.121Z",
                 "__v": 0
             },
             "instructor_id": "5dd8ca8b6cc68874201ec5f8",
             "__v": 1,
-            "createdAt": "2019-11-25T08:40:20.708Z",
-            "updatedAt": "2019-11-25T08:40:20.780Z",
+            "createdAt": "2019-11-04T06:00:56.121Z",
+            "updatedAt": "2019-11-04T06:00:56.121Z",
             "data": [
                 {
                     "evaluation_report": {
                         "exceeds": {
-                            "criteria": "does he fly?",
+                            "criteria": "criteria text here",
                             "grade": 32,
                             "documents": "uploads\\docs\\384d08644fbb6fe495ec82c9b2ab752a"
                         },
                         "meets": {
-                            "criteria": "does he tru?",
+                            "criteria": "criteria text here",
                             "grade": 31,
                             "documents": ""
                         },
                         "developing": {
-                            "criteria": "wow what a nut?",
+                            "criteria": "criteria text here",
                             "grade": 33,
                             "documents": ""
                         },
                         "fail": {
-                            "criteria": "does he cry?",
+                            "criteria": "criteria text here",
                             "grade": 90,
                             "documents": ""
                         }
@@ -1180,97 +1180,27 @@ GetAll
                     "_id": "5ddb937480cfea7ef0d502b1",
                     "questions_answers": [
                         {
-                            "question": "wow",
-                            "answer": "wew"
+                            "question": "some question",
+                            "answer": "some ans"
                         },
                         {
-                            "question": "dew",
-                            "answer": "wew"
+                            "question": "some question",
+                            "answer": "some ans"
                         },
                         {
-                            "question": "cew",
-                            "answer": "wew"
+                            "question": "some question",
+                            "answer": "some ans"
                         },
                         {
-                            "question": "wew",
-                            "answer": "wew"
-                        }
+                            "question": "some question",
+                            "answer": "some ans"
+                        },
                     ],
                     "grad_attribute": "CriticalThinking",
                     "indicator": "lolz"
                 },
                 {
                     "_id": "5ddb937480cfea7ef0d502b2",
-                    "questions_answers": [],
-                    "grad_attribute": "Listening",
-                    "indicator": "lulzec"
-                }
-            ],
-            "status": "Incomplete"
-        },
-        {
-            "_id": "5ddb95850d3037f9f1a6959e",
-            "course_id": {
-                "_id": "5ddb8a4dcf136d5ab0307954",
-                "faculty": "Software Systems Engineering",
-                "name": "ENSE350",
-                "createdAt": "2019-11-25T08:01:17.092Z",
-                "updatedAt": "2019-11-25T08:01:17.092Z",
-                "__v": 0
-            },
-            "instructor_id": "5dd8ca8b6cc68874201ec5f8",
-            "term": "Spring/Summer",
-            "__v": 2,
-            "createdAt": "2019-11-25T08:49:08.963Z",
-            "updatedAt": "2019-11-25T09:24:53.131Z",
-            "data": [
-                {
-                    "evaluation_report": {
-                        "exceeds": {
-                            "criteria": "does he fly?",
-                            "grade": 32,
-                            "documents": "uploads\\docs\\99cdf27bb2247d3a79ba888ffd6195ca"
-                        },
-                        "meets": {
-                            "criteria": "does he tru?",
-                            "grade": 31,
-                            "documents": ""
-                        },
-                        "developing": {
-                            "criteria": "wow what a nut?",
-                            "grade": 33,
-                            "documents": ""
-                        },
-                        "fail": {
-                            "criteria": "does he cry?",
-                            "grade": 90,
-                            "documents": ""
-                        }
-                    },
-                    "_id": "5ddb95856bfb4bb3b838b701",
-                    "questions_answers": [
-                        {
-                            "question": "wow",
-                            "answer": "wew"
-                        },
-                        {
-                            "question": "dew",
-                            "answer": "wew"
-                        },
-                        {
-                            "question": "cew",
-                            "answer": "wew"
-                        },
-                        {
-                            "question": "wew",
-                            "answer": "wew"
-                        }
-                    ],
-                    "grad_attribute": "CriticalThinking",
-                    "indicator": "lolz"
-                },
-                {
-                    "_id": "5ddb95856bfb4bb3b838b702",
                     "questions_answers": [],
                     "grad_attribute": "Listening",
                     "indicator": "lulzec"
@@ -1381,28 +1311,28 @@ Update
         "course_id": "5ddb8a4dcf136d5ab0307954",
         "instructor_id": "5dd8ca8b6cc68874201ec5f8",
         "__v": 1,
-        "createdAt": "2019-11-25T08:38:12.478Z",
-        "updatedAt": "2019-11-25T08:38:12.569Z",
+        "createdAt": "2019-11-04T06:00:56.121Z",
+        "updatedAt": "2019-11-04T06:00:56.121Z",
         "data": [
             {
                 "evaluation_report": {
                     "exceeds": {
-                        "criteria": "does he fly?",
+                        "criteria": "criteria text here",
                         "grade": 32,
                         "documents": "uploads\\docs\\bcbe2303c4670b605900e8b22efd26a3"
                     },
                     "meets": {
-                        "criteria": "does he tru?",
+                        "criteria": "criteria text here",
                         "grade": 31,
                         "documents": ""
                     },
                     "developing": {
-                        "criteria": "wow what a nut?",
+                        "criteria": "criteria text here",
                         "grade": 33,
                         "documents": ""
                     },
                     "fail": {
-                        "criteria": "does he cry?",
+                        "criteria": "criteria text here",
                         "grade": 90,
                         "documents": ""
                     }
@@ -1410,20 +1340,20 @@ Update
                 "_id": "5ddb92f480cfea7ef0d502ad",
                 "questions_answers": [
                     {
-                        "question": "wow",
-                        "answer": "wew"
+                            "question": "some question",
+                            "answer": "some ans"
                     },
                     {
-                        "question": "dew",
-                        "answer": "wew"
+                        "question": "question here",
+                        "answer": "answer here"
                     },
                     {
-                        "question": "cew",
-                        "answer": "wew"
+                        "question": "question here",
+                        "answer": "answer here"
                     },
                     {
-                        "question": "wew",
-                        "answer": "wew"
+                        "question": "answer here",
+                        "answer": "answer here"
                     }
                 ],
                 "grad_attribute": "CriticalThinking",

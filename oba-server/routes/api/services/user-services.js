@@ -98,9 +98,7 @@ function login(req, res, next) {
     .catch(err => {
       if (err) {
         logging_utils.error(
-          `unable to authenticate user. Invalid email or pass.${JSON.stringify(
-            err.errors
-          )}`
+          `unable to authenticate user. Invalid email or pass.${err.errors}`
         );
         http_utils.responsify(
           res_body,

@@ -15,8 +15,8 @@
     "late_policies": [
       {
         "Fall": {
-          "Month": "January",
-          "Day": 1
+          "Month": "November",
+          "Day": 25
         },
         "Winter": {
           "Month": "May",

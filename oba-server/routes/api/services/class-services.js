@@ -48,7 +48,9 @@ function update(req, res) {
       // find equivalent course to create an instance of.
       return Course.findOne({
         name: req.body.course_name
-      }).exec();
+      })
+        .lean()
+        .exec();
     })
     .then(record => {
       if (!record)
@@ -91,6 +93,7 @@ function update(req, res) {
     })
     .catch(err => {
       if (err) {
+        logging_utils.error(`error updating class: ${err}`);
         http_utils.responsify(res_body, http_utils.FLAG_INVALID_INPUT, [], err);
       }
     })
@@ -125,7 +128,7 @@ function get_by_name(req, res) {
               _id: { $in: record.classes }
             }
       )
-        .populate("course_id")
+        .populate({ path: "course_id", options: { lean: true } })
         .lean()
         .exec();
     })
@@ -155,10 +158,7 @@ function get_by_name(req, res) {
     })
     .catch(err => {
       if (err) {
-        logging_utils.error(
-          `error getting class by name: ${JSON.stringify(err)}`
-        );
-
+        logging_utils.error(`error getting class by name: ${err}`);
         http_utils.responsify(res_body, http_utils.FLAG_INVALID_INPUT, [], err);
       }
     })

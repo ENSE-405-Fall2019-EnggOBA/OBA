@@ -1,4 +1,4 @@
-const logging_utils = require("../utils/logger");
+const logging_utils = require("./utils/logger");
 const crypto = require("crypto");
 
 function job_context_t(id, name, fn) {
@@ -56,9 +56,12 @@ class job_scheduler {
         // if the job already exists, delete it from the db create fresh records.
         if (job_index !== -1) {
           this.agenda
-            .cancel({ name: options.job_name })
-            .then(job => {
-              logging_utils.info(`canceled job: ${job}`);
+            .cancel({ name: options.name })
+            .then(cancel_count => {
+              logging_utils.warn(
+                `job already exists in db: ${options.job_name} `
+              );
+              logging_utils.warn(`canceled # of jobs: ${cancel_count}`);
               this._schedule_job_helper(options);
             })
             .catch(err => {
