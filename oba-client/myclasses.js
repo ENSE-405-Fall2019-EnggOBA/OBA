@@ -11,17 +11,17 @@ $(document).ready(function() {
     const table = $('#my-classes-tbody')
     $.ajax({
         type: 'GET',
-        url: baseUrl + '/courses/all',
+        url: baseUrl + '/classes/all',
         headers: { 'Authorization': 'Bearer ' + token },
         success: ({ result }) => {
             result.forEach(element => {
                 table.append($(`
 <tr>
-    <td>FACULTY NAME</td>
-    <td>${element.faculty_name} ${element.course_number}</td>
-    <td>TERM</td>
+    <td>${element.course_id.faculty}</td>
+    <td>${element.course_id.name}</td>
+    <td>${element.term}</td>
     <td>YEAR</td>
-    <td>${element.status}</td>
+    <td>STATUS</td>
 </tr>                
                 `).on('click', () => {
                     window.location.href = 'addclass.html#' + element._id
