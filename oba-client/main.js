@@ -42,6 +42,7 @@ $(document).on('submit', '#login', function(){
     	success: function(result){
 			let user_name = result.result.email;
 			let user_role = result.result.role;
+			window.localStorage.setItem('oba-token', result.result.token)
             setTimeout(function(){
             window.location.href = "https://maciag.ursse.org/oba/dashboard.html";
 			}, 500);
