@@ -21,8 +21,16 @@ const config = {
         }
     ],
     questions: [
-        'QUESTION 1'
-    ]
+        'QUESTION 1',
+    ],
+	faculties: {
+		'ENSE': 'Software Systems Engineering',
+		'ENEL': 'Electronic Systems Engineering',
+		'ENEV': 'Environmental Systems Engineering',
+		'ENIN': 'Industrial Systems Engineering',
+		'ENPE': 'Petroleum Systems Engineering',
+		'ENPC': 'Process Systems Engineering',
+	}
 }
 
 $('#back-btn').on('click', function() {
@@ -34,11 +42,36 @@ $('#add-ga-btn').on('click', function() {
 }).prop('hidden', true)
 
 $('#save-btn').on('click', function() {
-    alert("Successfully submitted!");
+	const id = location.hash.substr(1) || (Math.random() * 100000000).toString().replace('.','')
+	const formData = getFormData(prepareFormInfo())
+	const request = new XMLHttpRequest()
+	request.open('PUT', baseUrl + '/classes/' + id)
+	request.onload = () => {
+		alert('done')
+		location.hash = '#' + id
+	}
+	request.send(formData)
 })
+
+function prepareFormInfo() {
+	const ga = getGa($('#data'))
+	const data = [ga]
+	const form = {
+		term: $('#termSelect').val(),
+		faculty: config.faculties[$('#facultySelect').val()],
+		course_name: $('#facultySelect').val() + $('#courseNoInput').val(),
+		year: 2020,
+		data,
+	}
+	return form
+}
 
 $(document).ready(function() {
     token = window.localStorage.getItem('oba-token')
+	$('#facultySelect').html(null)
+	for (const key in config.faculties) {
+		$('#facultySelect').append(`<option>${key}</option>`)
+	}
     if (!token) {
         setTimeout(() => {
             window.location.href = 'https://maciag.ursse.org/oba/login.html'
@@ -129,10 +162,10 @@ function addGa(div, data = {
     <table class="table table-bordered">
         <thead class="thead dark">
             <tr>
-				<th scope="col">Fails to meet expectations</th>
-				<th scope="col">Developing</th>
-				<th scope="col">Meets Expectations</th>
-				<th scope="col">Exceeds Expectations</th>
+                <th scope="col">Fails to meet expectations</th>
+                <th scope="col">Developing</th>
+                <th scope="col">Meets Expectations</th>
+                <th scope="col">Exceeds Expectations</th>
             </tr>
         </thead>
         <tbody>
@@ -218,9 +251,11 @@ function getGa(div) {
     ;['fail', 'developing', 'meets', 'exceeds'].forEach(key => {
         const criteria = $(`#${id}-${key}-criteria`).val()
         const grade = $(`#${id}-${key}-grade`).val()
+		const file = $(`#${id}-${key}-document`).prop('files')[0]
         evaluation_report[key] = {
             criteria,
-            grade
+            grade,
+			file,
         }
     })
     const numQuestions = Number($(`#${id}-questions`).data('count'))
@@ -237,4 +272,42 @@ function getGa(div) {
         evaluation_report,
         questions_answers,
     }
+}
+
+function getFormData(form) {
+	const formData = new FormData()
+	formData.append('term', form.term)
+	formData.append('faculty', form.faculty)
+	formData.append('course_name', form.course_name)
+	formData.append('year', form.year)
+	form.data.forEach((ga, index) => {
+		formData.append(`data[${index}][grad_attribute]`, ga.grad_attribute)
+		formData.append(`data[${index}][indicator]`, ga.indicator)
+		;['fail', 'developing', 'meets', 'exceeds'].forEach(key => {
+			formData.append(`data[${index}][${key}][criteria]`, ga.evaluation_report[key].criteria)
+			formData.append(`data[${index}][${key}][grade]`, ga.evaluation_report[key].grade)
+			const file = ga.evaluation_report[key].file
+			if (file) {
+				formData.append(`${ga.grad_attribute.trim().replace(' ', '_')}_${key}`, file)
+			}
+		})
+		ga.questions_answers.forEach((question, qIndex) => {
+			formData.append(`data[${index}][questions][${qIndex}]`, question.question)
+			formData.append(`data[${index}][answers][${qIndex}]`, question.answer)
+		})
+	})
+	formData.append('complete_flag', false)
+	return formData
+}
+
+function upsertCourse(name) {
+	$.ajax({
+        type: 'GET',
+        url: baseUrl + '/courses/all',
+        headers: { 'Authorization': 'Bearer ' + token },
+        success: ({ result }) => {
+			//if (result.
+        },
+        error: (e) => alert(e),
+    })
 }
