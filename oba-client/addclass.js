@@ -45,7 +45,6 @@ $(document).ready(function() {
         }, 500);
         return
     }
-    setupAttributesAndIndicators($('#attributeSelect'), $('#indicatorSelect'))
     const id = location.hash.substr(1)
     if (id) {
         loadForId(id, token)
@@ -64,7 +63,7 @@ function setupAttributesAndIndicators(
     indicatorSelect.prop('disabled', true)
 
     // clear out old attributes
-    attributeSelect.html('<option>Graduate Attribute</option>')
+    attributeSelect.html('<option value="">Graduate Attribute</option>')
     config.attributes.forEach(attribute => {
         attributeSelect.append(`<option>${attribute.name}</option>`)
     })
@@ -84,15 +83,15 @@ function setupAttributesAndIndicators(
     })
 
     if (attributeValue) {
-        attributeSelect.value = attributeValue
+        attributeSelect.val(attributeValue)
     }
     if (indicatorValue) {
-        indicatorSelect.value = indicatorValue
+        indicatorSelect.val(indicatorValue)
     }
 }
 
 function createNew() {
-    
+    addGa($('#data'))
 }
 
 function loadForId(id, token) {
@@ -102,23 +101,29 @@ function loadForId(id, token) {
         headers: { 'Authorization': 'Bearer ' + token },
         success: ({ result }) => {
             window.lastResult = result
+            addGa($('#data'), result.data[0])
         }
     })
 }
 
-function addGa(div, data) {
+function addGa(div, data = {
+    questions_answers: config.questions.map(question => ({
+        question,
+        answer: '',
+    }))
+}) {
     const id = div.prop('id')
     div.html(null)
     div.append(`
 <section class="py-0">
     <div class="col-sm">
         <div class="form-group">
-            <select class="form-control" id="${id}.attribute"></select>
+            <select class="form-control" id="${id}-attribute"></select>
         </div>
     </div>
     <div class="col-sm">
         <div class="form-group">
-            <select class="form-control" id="${id}.indicator"></select>
+            <select class="form-control" id="${id}-indicator"></select>
         </div>
     </div>
     <table class="table table-bordered">
@@ -132,71 +137,72 @@ function addGa(div, data) {
         </thead>
         <tbody>
             <tr class="table-primary">
-                <td><input type="text" id="${id}.fail.criteria"/></td>
-                <td><input type="text" id="${id}.developing.criteria"/></td>
-                <td><input type="text" id="${id}.meets.criteria"/></td>
-                <td><input type="text" id="${id}.exceeds.criteria"/></td>
+                <td><input type="text" id="${id}-fail-criteria"/></td>
+                <td><input type="text" id="${id}-developing-criteria"/></td>
+                <td><input type="text" id="${id}-meets-criteria"/></td>
+                <td><input type="text" id="${id}-exceeds-criteria"/></td>
             </tr>
             <tr class="table-success">
-                <td><input type="number" id="${id}.fail.grade"/></td>
-                <td><input type="number" id="${id}.developing.grade"/></td>
-                <td><input type="number" id="${id}.meets.grade"/></td>
-                <td><input type="number" id="${id}.exceeds.grade"/></td>
+                <td><input type="number" id="${id}-fail-grade"/></td>
+                <td><input type="number" id="${id}-developing-grade"/></td>
+                <td><input type="number" id="${id}-meets-grade"/></td>
+                <td><input type="number" id="${id}-exceeds-grade"/></td>
             </tr>
-            <tr class="table-warning>
+            <tr class="table-warning">
                 <td><div class="custom-file">
-                    <input type="file" class="custom-file-input" id="${id}.fail.document">
-                    <label class="custom-file-label" for="${id}.fail.document">Add Document</label>
+                    <input type="file" class="custom-file-input" id="${id}-fail-document">
+                    <label class="custom-file-label" for="${id}-fail-document">Add Document</label>
                 </div></td>
                 <td><div class="custom-file">
-                    <input type="file" class="custom-file-input" id="${id}.developing.document">
-                    <label class="custom-file-label" for="${id}.developing.document">Add Document</label>
+                    <input type="file" class="custom-file-input" id="${id}-developing-document">
+                    <label class="custom-file-label" for="${id}-developing-document">Add Document</label>
                 </div></td>
                 <td><div class="custom-file">
-                    <input type="file" class="custom-file-input" id="${id}.meets.document">
-                    <label class="custom-file-label" for="${id}.meets.document">Add Document</label>
+                    <input type="file" class="custom-file-input" id="${id}-meets-document">
+                    <label class="custom-file-label" for="${id}-meets-document">Add Document</label>
                 </div></td>
                 <td><div class="custom-file">
-                    <input type="file" class="custom-file-input" id="${id}.exceeds.document">
-                    <label class="custom-file-label" for="${id}.exceeds.document">Add Document</label>
+                    <input type="file" class="custom-file-input" id="${id}-exceeds-document">
+                    <label class="custom-file-label" for="${id}-exceeds-document">Add Document</label>
                 </div></td>
             </tr>
         </tbody>
     </table>
 </section>
 <section class="py-5">
-    <div class="row" id="${id}.questions"></div>
+    <div class="row" id="${id}-questions"></div>
 </section>
     `)
     setupAttributesAndIndicators(
-        $('#' + id + '.attribute'),
-        $('#' + id + '.indicator'),
+        $('#' + id + '-attribute'),
+        $('#' + id + '-indicator'),
         data.grad_attribute,
         data.indicator,
     )
     const report = data.evaluation_report
     if (report) {
         ['fail', 'developing', 'meets', 'exceeds'].forEach(key => {
-            $(`#${id}.${key}.criteria`).value = report[key].criteria
-            $(`#${id}.${key}.grade`).value = report[key].grade
+            $(`#${id}-${key}-criteria`).val(report[key].criteria)
+            $(`#${id}-${key}-grade`).val(report[key].grade)
             if (report[key].documents) {
-                $(`#${id}.${key}.document`).prop('disabled', true)
+                $(`#${id}-${key}-document`).prop('disabled', true)
             }
         })
     }
     const questions = data.questions_answers || []
-    const qDiv = $(`#${id}.questions`)
-    qDiv.prop('data-count', questions.length)
+    const qDiv = $(`#${id}-questions`)
+    qDiv.data('count', questions.length)
     questions.forEach((question, index) => {
+        alert(question.question)
         qDiv.append(`
 <div class="col">
     <div class="form-group">
-        <label class="form-control" for="${id}.questions.${index}">${question.question}</label>
+        <label class="form-control" for="${id}-questions-${index}">${question.question}</label>
     </div>
 </div>
 <div class="col">
     <div class="form-group">
-        <textarea class="form-control" rows="3" data-question="${question.question}" id="${id}.questions.${index}">${question.answer}</textarea>
+        <textarea class="form-control" rows="3" data-question="${question.question}" id="${id}-questions-${index}">${question.answer}</textarea>
     </div>
 </div>
 <div class="w-100"></div>    
@@ -206,23 +212,23 @@ function addGa(div, data) {
 
 function getGa(div) {
     const id = div.prop('id')
-    const grad_attribute = $(`#${id}.attribute`).value
-    const indicator = $(`#${id}.indicator`).value
+    const grad_attribute = $(`#${id}-attribute`).val()
+    const indicator = $(`#${id}-indicator`).val()
     const evaluation_report = {}
     ;['fail', 'developing', 'meets', 'exceeds'].forEach(key => {
-        const criteria = $(`#${id}.${key}.criteria`).value
-        const grade = $(`#${id}.${key}.grade`).value
+        const criteria = $(`#${id}-${key}-criteria`).val()
+        const grade = $(`#${id}-${key}-grade`).val()
         evaluation_report[key] = {
             criteria,
             grade
         }
     })
-    const numQuestions = Number($(`#${id}.questions`).prop('data-count').value)
+    const numQuestions = Number($(`#${id}-questions`).data('count'))
     questions_answers = []
     for (let i = 0; i < numQuestions; ++i) {
-        htmlelement = $(`#${id}.questions.${index}`)
-        question = htmlelement.prop('data-question')
-        answer = htmlelement.value
+        htmlelement = $(`#${id}-questions-${i}`)
+        question = htmlelement.data('question')
+        answer = htmlelement.val()
         questions_answers[i] = { question, answer }
     }
     return {
