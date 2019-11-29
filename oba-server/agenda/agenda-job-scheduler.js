@@ -1,4 +1,4 @@
-const logging_utils = require("./utils/logger");
+const logging_utils = require("../utils/logger");
 const crypto = require("crypto");
 
 function job_context_t(id, name, fn) {
