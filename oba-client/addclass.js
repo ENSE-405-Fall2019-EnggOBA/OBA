@@ -1,3 +1,5 @@
+const baseUrl = 'https://maciag.ursse.org/api'
+
 // hardcoded for convenience
 const config = {
     attributes: [
@@ -29,17 +31,24 @@ $('#back-btn').on('click', function() {
 
 $('#add-ga-btn').on('click', function() {
     alert("added GA!");
-})
+}).prop('hidden', true)
 
 $('#save-btn').on('click', function() {
     alert("Successfully submitted!");
 })
 
 $(document).ready(function() {
+    token = window.localStorage.getItem('oba-token')
+    if (!token) {
+        setTimeout(() => {
+            window.location.href = 'https://maciag.ursse.org/oba/login.html'
+        }, 500);
+        return
+    }
     setupAttributesAndIndicators($('#attributeSelect'), $('#indicatorSelect'))
     const id = location.hash
     if (id) {
-        loadForId(id)
+        loadForId(id, token)
     } else {
         createNew()
     }
@@ -74,6 +83,22 @@ function createNew() {
 
 }
 
-function loadForId(id) {
+function loadForId(id, token) {
+    $.ajax({
+        type: 'GET',
+        url: baseUrl + '/courses/' + id,
+        headers: { 'Authorization': 'Bearer ' + token },
+        success: ({ result }) => {
+            window.lastResult = result
+            alert(JSON.stringify(result))
+        }
+    })
+}
+
+function buildForm() {
+    
+}
+
+function submitForm() {
 
 }
