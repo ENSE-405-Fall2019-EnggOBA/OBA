@@ -35,3 +35,7 @@ $(document).ready(function() {
         }
     })
 })
+
+$('#add-class-btn').on('click', function() {
+    window.location.href = 'addclass.html'
+})
