@@ -14,17 +14,17 @@ $(document).ready(function() {
         url: baseUrl + '/courses/all',
         headers: { 'Authorization': 'Bearer ' + token },
         success: ({ result }) => {
-            result.success.forEach(element => {
+            result.forEach(element => {
                 table.append($(`
 <tr>
-    <>FACULTY NAME</>
-    <>${element.faculty_name} ${element.course_number}</>
-    <>TERM</>
-    <>YEAR</>
-    <>${element.status}</>
+    <td>FACULTY NAME</td>
+    <td>${element.faculty_name} ${element.course_number}</td>
+    <td>TERM</td>
+    <td>YEAR</td>
+    <td>${element.status}</td>
 </tr>                
                 `).on('click', () => {
-                    alert('navigating to: ' + element)
+                    alert('navigating to: ' + JSON.stringify(element))
                 }))
             })
         },
