@@ -75,31 +75,31 @@
    			 </select>
 		</div>
 		</div>
-	
-	
-	<div class="col-sm">
-			<div class="form-group">
- 	 	    <select class="form-control" id="attributeSelect">
- 	 	    	<option>Select Graduate Attribute</option>
-      			<option>Attribute 1</option>
-      			<option>Attribute 2</option>
-      			<option>Attribute 3</option>
-   			 </select>
-		</div>
-		</div>
-		
-
-<div class="col-sm">
-			<div class="form-group">
- 	 	    <select class="form-control" id="indicatorSelect"></select>
-		</div>
-  		</div>
-  		
 	</div>
 	</section>
 
+	<div id="data"></div>
+
 <form>
 	<section class="py-0">
+			<div class="col-sm">
+					<div class="form-group">
+					  <select class="form-control" id="data.0.attribute">
+						  <option>Select Graduate Attribute</option>
+						  <option>Attribute 1</option>
+						  <option>Attribute 2</option>
+						  <option>Attribute 3</option>
+						</select>
+				</div>
+				</div>
+				
+		
+		<div class="col-sm">
+					<div class="form-group">
+					  <select class="form-control" id="data.0.indicator"></select>
+				</div>
+				  </div>
+
 		<table class="table table-bordered">
 			<thead class="thead-dark">
 			<tr >
@@ -112,45 +112,45 @@
 			
 			<tbody>
 			<tr class="table-primary">
-				<td>Can he fly?</td>
-				<td>Can he swim?</td>
-				<td>Can he breathe?</td>
-				<td>Can he talk?</td>
+				<td><input type="text" id="data.0.criteria.0"/></td>
+				<td><input type="text" id="data.0.criteria.0"/></td>
+				<td><input type="text" id="data.0.criteria.0"/></td>
+				<td><input type="text" id="data.0.criteria.0"/></td>
 			</tr>
 			
 			<tr class="table-success">
-				<td>10</td>
-				<td>23</td>
-				<td>45</td>
-				<td>69</td>
+				<td><input type="number" id="data.0.count.0"/></td>
+				<td><input type="number" id="data.0.count.1"/></td>
+				<td><input type="number" id="data.0.count.2"/></td>
+				<td><input type="number" id="data.0.count.3"/></td>
 			</tr>
 			
 			<tr class="table-warning">
 				<td>
 				<div class="custom-file">
-				    <input type="file" class="custom-file-input" id="customFile">
-    				<label class="custom-file-label" for="customFile">Add Document</label>
+				    <input type="file" class="custom-file-input" id="data.0.file.0">
+    				<label class="custom-file-label" for="data.0.file.0">Add Document</label>
  				</div>
  				</td>
  				
  				<td>
 				<div class="custom-file">
-				    <input type="file" class="custom-file-input" id="customFile">
-    				<label class="custom-file-label" for="customFile">Add Document</label>
+				    <input type="file" class="custom-file-input" id="data.0.file.1">
+    				<label class="custom-file-label" for="data.0.file.1">Add Document</label>
  				</div>
  				</td>
  				
  				<td>
 				<div class="custom-file">
-				    <input type="file" class="custom-file-input" id="customFile">
-    				<label class="custom-file-label" for="customFile">Add Document</label>
+				    <input type="file" class="custom-file-input" id="data.0.file.2">
+    				<label class="custom-file-label" for="data.0.file.2">Add Document</label>
  				</div>
  				</td>
  				
  				<td>
 				<div class="custom-file">
-				    <input type="file" class="custom-file-input" id="customFile">
-    				<label class="custom-file-label" for="customFile">Add Document</label>
+				    <input type="file" class="custom-file-input" id="data.0.file.3">
+    				<label class="custom-file-label" for="data.0.file.3">Add Document</label>
  				</div>
  				</td>
 
@@ -167,52 +167,26 @@
 		
 			<div class="col">
 			<div class="form-group">
-				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3">Q: How are you?</textarea>
+				<label class="form-control" id="exampleFormControlTextarea1" for="data.0.question.0">Q: How are you?</label>
 			</div>
 			</div>
 			<div class="col">
 				<div class="form-group">
-				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3">Good</textarea>
+				<textarea class="form-control" id="data.0.question.0" rows="3">Good</textarea>
 				</div>
-			</div>
-			
+			</div>			
 			<div class="w-100"></div>
 			
 			<div class="col">
 				<div class="form-group">
-				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3">Q: How is your day?</textarea>
+				<label class="form-control" id="exampleFormControlTextarea1" for="data.0.question.1">Q: How is your day?</label>
 				</div>
 			</div>
 			<div class="col">
 				<div class="form-group">
-				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3">Cool</textarea>
+				<textarea class="form-control" id="data.0.question.1" rows="3">Cool</textarea>
 				</div>
 			</div>
-			<div class="w-100"></div>
-			<div class="col">
-				<div class="form-group">
-				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3">Q: What are you doing?</textarea>
-				</div>
-			</div>
-			<div class="col">
-				<div class="form-group">
-				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3">Demonstrate this project</textarea>
-				</div>
-			</div>
-			
-			<div class="w-100"></div>
-			
-			<div class="col">
-				<div class="form-group">
-					<textarea class="form-control" id="exampleFormControlTextarea1" rows="3">Q: Ni hao</textarea>
-				</div>
-			</div>
-			<div class="col">
-				<div class="form-group">
-					<textarea class="form-control" id="exampleFormControlTextarea1" rows="3">Okay</textarea>
-				</div>
-			</div>
-			
 			<div class="w-100"></div>
 			
 			<div class="col">
