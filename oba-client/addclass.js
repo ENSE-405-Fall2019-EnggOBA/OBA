@@ -46,7 +46,7 @@ $(document).ready(function() {
         return
     }
     setupAttributesAndIndicators($('#attributeSelect'), $('#indicatorSelect'))
-    const id = location.hash
+    const id = location.hash.substr(1)
     if (id) {
         loadForId(id, token)
     } else {
@@ -80,23 +80,22 @@ function setupAttributesAndIndicators(attributeSelect, indicatorSelect) {
 }
 
 function createNew() {
-
+    
 }
 
 function loadForId(id, token) {
     $.ajax({
         type: 'GET',
-        url: baseUrl + '/courses/' + id,
+        url: baseUrl + '/classes/' + id,
         headers: { 'Authorization': 'Bearer ' + token },
         success: ({ result }) => {
             window.lastResult = result
-            alert(JSON.stringify(result))
         }
     })
 }
 
 function buildForm() {
-    
+
 }
 
 function submitForm() {
