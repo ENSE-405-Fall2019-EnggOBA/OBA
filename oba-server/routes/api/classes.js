@@ -16,6 +16,11 @@ router.get("/all", auth.required, auth.guard, (req, res) => {
   routing_services.get_all(req, res);
 });
 
+// end point to GET a class by its id
+router.get('/:id', auth.required, auth.guard, (req, res) => {
+  routing_services.get_by_id(req, res)
+});
+
 // end point to GET a class by name
 router.get(
   "/",

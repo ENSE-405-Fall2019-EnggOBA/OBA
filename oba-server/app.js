@@ -17,7 +17,7 @@ const agenda = new Agenda({
   }
 });
 
-require("./agenda-late-notifications")(agenda);
+require("./agenda/agenda-late-notifications")(agenda);
 
 app.use(cors());
 app.use(require("morgan")("dev"));

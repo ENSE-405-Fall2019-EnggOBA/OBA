@@ -1,4 +1,4 @@
-const dates_hash = require("./utils/dates");
+const dates_hash = require("../utils/dates");
 
 module.exports = agenda => {
   agenda.on("ready", () => {

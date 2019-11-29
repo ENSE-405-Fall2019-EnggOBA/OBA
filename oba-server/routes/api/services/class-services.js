@@ -102,6 +102,32 @@ function update(req, res) {
     });
 }
 
+async function get_by_id(req, res) {
+  const res_body = { status: '', errors: [], result: {} };
+  try {
+    const user = await User.findById(req.currentUser.id);
+    if (!user) {
+      throw http_utils.mongoose_promise_chain_error(
+        "couldnt find current user"
+      );
+    }
+    const requestedClass = await Class.findById(req.params.id);
+    if (!requestedClass) {
+      throw http_utils.mongoose_promise_chain_error(
+        `couldn't find class`
+      );
+    }
+    http_utils.responsify(res_body, http_utils.FLAG_VALID_INPUT, requestedClass)
+  } catch (err) {
+    if (err) {
+      logging_utils.error(`error getting class by name: ${err}`);
+      http_utils.responsify(res_body, http_utils.FLAG_INVALID_INPUT, [], err);
+    }
+  } finally {
+    return res.json(res_body);
+  }
+}
+
 function get_by_name(req, res) {
   const res_body = { status: "", errors: [], result: {} };
   let user_faculty;
@@ -224,4 +250,4 @@ function get_all(req, res) {
     });
 }
 
-module.exports = { get_all, get_by_name, update };
+module.exports = { get_all, get_by_name, update, get_by_id };
