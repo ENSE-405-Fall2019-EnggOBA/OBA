@@ -108,6 +108,7 @@ function loadForId(id, token) {
 
 function addGa(div, data) {
     const id = div.prop('id')
+    div.html(null)
     div.append(`
 <section class="py-0">
     <div class="col-sm">
@@ -163,6 +164,9 @@ function addGa(div, data) {
         </tbody>
     </table>
 </section>
+<section class="py-5">
+    <div class="row" id="${id}.questions"></div>
+</section>
     `)
     setupAttributesAndIndicators(
         $('#' + id + '.attribute'),
@@ -174,12 +178,57 @@ function addGa(div, data) {
     if (report) {
         ['fail', 'developing', 'meets', 'exceeds'].forEach(key => {
             $(`#${id}.${key}.criteria`).value = report[key].criteria
-            $(`#${id}.${key}.grade`).value = report[key].grad_attribute
+            $(`#${id}.${key}.grade`).value = report[key].grade
             if (report[key].documents) {
                 $(`#${id}.${key}.document`).prop('disabled', true)
             }
         })
     }
+    const questions = data.questions_answers || []
+    const qDiv = $(`#${id}.questions`)
+    qDiv.prop('data-count', questions.length)
+    questions.forEach((question, index) => {
+        qDiv.append(`
+<div class="col">
+    <div class="form-group">
+        <label class="form-control" for="${id}.questions.${index}">${question.question}</label>
+    </div>
+</div>
+<div class="col">
+    <div class="form-group">
+        <textarea class="form-control" rows="3" data-question="${question.question}" id="${id}.questions.${index}">${question.answer}</textarea>
+    </div>
+</div>
+<div class="w-100"></div>    
+        `)
+    })
 }
 
-
+function getGa(div) {
+    const id = div.prop('id')
+    const grad_attribute = $(`#${id}.attribute`).value
+    const indicator = $(`#${id}.indicator`).value
+    const evaluation_report = {}
+    ;['fail', 'developing', 'meets', 'exceeds'].forEach(key => {
+        const criteria = $(`#${id}.${key}.criteria`).value
+        const grade = $(`#${id}.${key}.grade`).value
+        evaluation_report[key] = {
+            criteria,
+            grade
+        }
+    })
+    const numQuestions = Number($(`#${id}.questions`).prop('data-count').value)
+    questions_answers = []
+    for (let i = 0; i < numQuestions; ++i) {
+        htmlelement = $(`#${id}.questions.${index}`)
+        question = htmlelement.prop('data-question')
+        answer = htmlelement.value
+        questions_answers[i] = { question, answer }
+    }
+    return {
+        grad_attribute,
+        indicator,
+        evaluation_report,
+        questions_answers,
+    }
+}
