@@ -24,7 +24,7 @@ $(document).ready(function() {
     <td>${element.status}</td>
 </tr>                
                 `).on('click', () => {
-                    alert('navigating to: ' + JSON.stringify(element))
+                    window.location.href = 'addclass.html#' + element._id
                 }))
             })
         },
