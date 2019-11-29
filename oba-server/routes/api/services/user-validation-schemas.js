@@ -29,7 +29,7 @@ const register_user_schema = Joi.object({
 const login_user_schema = Joi.object({
   user: {
     email: email_key,
-    password: pass_key
+    password: Joi.string().required(),
   }
 });
 
