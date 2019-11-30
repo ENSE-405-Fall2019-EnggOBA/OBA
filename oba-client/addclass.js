@@ -1,4 +1,5 @@
 const baseUrl = 'https://maciag.ursse.org/api'
+let token;
 
 // hardcoded for convenience
 const config = {
@@ -42,19 +43,24 @@ $('#add-ga-btn').on('click', function() {
 }).prop('hidden', true)
 
 $('#save-btn').on('click', async function() {
-    const id = location.hash.substr(1) || (Math.random() * 100000000).toString().replace('.','')
+    const id = location.hash.substr(1) || generateId()
     const formInfo = prepareFormInfo()
     // ensure the course exists
     await upsertCourse(formInfo.course_name, formInfo.faculty)
 	const formData = getFormData(formInfo)
 	const request = new XMLHttpRequest()
-	request.open('PUT', baseUrl + '/classes/' + id)
+    request.open('PUT', baseUrl + '/classes/' + id)
+    request.setRequestHeader('Authorization', 'Bearer ' + token)
 	request.onload = () => {
 		alert('done')
 		location.hash = '#' + id
 	}
 	request.send(formData)
 })
+
+function generateId() {
+    return (Math.random() * 100000000).toString().replace('.','')
+}
 
 function prepareFormInfo() {
 	const ga = getGa($('#data'))
