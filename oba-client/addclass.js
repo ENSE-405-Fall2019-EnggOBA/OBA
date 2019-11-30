@@ -61,7 +61,7 @@ $('#save-btn').on('click', async function() {
 })
 
 function generateId() {
-    return (Math.random() * 100000000).toString().replace('.','')
+    return (Math.random() * 100000000).toString().replace('.','').substr(0, 24).padEnd(24, '0')
 }
 
 function prepareFormInfo() {
