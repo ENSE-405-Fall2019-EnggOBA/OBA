@@ -19,7 +19,7 @@ $(document).ready(function() {
     <td>${element.course_id.name}</td>
     <td>${element.term}</td>
     <td>YEAR</td>
-    <td>STATUS</td>
+    <td>${element.status}</td>
 </tr>                
                 `).on('click', () => {
                     window.location.href = 'addclass.html#' + element._id
