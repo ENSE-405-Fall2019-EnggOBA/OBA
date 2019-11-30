@@ -141,6 +141,7 @@ function setupAttributesAndIndicators(
 }
 
 function createNew() {
+    $('#yearInput').val(new Date().getFullYear())
     addGa($('#data'))
 }
 
@@ -151,6 +152,7 @@ function loadForId(id, token) {
         headers: { 'Authorization': 'Bearer ' + token },
         success: async ({ result }) => {
             course = await getCourse(result.course_id)
+            $('#yearInput').val(result.year || new Date().getFullYear())
             $('#termSelect').val(result.term)
             $('#facultySelect').val(course.name.substr(0, 4))
             $('#courseNoInput').val(course.name.substr(4))

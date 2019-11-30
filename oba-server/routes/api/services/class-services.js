@@ -83,6 +83,7 @@ function update(req, res) {
     .then(record => {
       record.course_id = course_id;
       record.term = req.body.term;
+      record.year = req.body.year;
       service_helpers.update_class(req, record);
       return record.save();
     })

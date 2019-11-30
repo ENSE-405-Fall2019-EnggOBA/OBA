@@ -18,7 +18,7 @@ $(document).ready(function() {
     <td>${element.course_id.faculty}</td>
     <td>${element.course_id.name}</td>
     <td>${element.term}</td>
-    <td>YEAR</td>
+    <td>${element.year}</td>
     <td>${element.status}</td>
 </tr>                
                 `).on('click', () => {

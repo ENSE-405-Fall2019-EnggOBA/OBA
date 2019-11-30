@@ -10,7 +10,8 @@ const add_class_schema = Joi.object({
       .valid("Fall", "Winter", "Spring/Summer")
       .required(),
     year: Joi.number()
-      .equal(new Date().getFullYear())
+      .less(new Date().getFullYear() + 1)
+      .greater(new Date().getFullYear() - 1)
       .required()
   }
 });
