@@ -41,9 +41,12 @@ $('#add-ga-btn').on('click', function() {
     alert("added GA!");
 }).prop('hidden', true)
 
-$('#save-btn').on('click', function() {
-	const id = location.hash.substr(1) || (Math.random() * 100000000).toString().replace('.','')
-	const formData = getFormData(prepareFormInfo())
+$('#save-btn').on('click', async function() {
+    const id = location.hash.substr(1) || (Math.random() * 100000000).toString().replace('.','')
+    const formInfo = prepareFormInfo()
+    // ensure the course exists
+    await upsertCourse(formInfo.course_name, formInfo.faculty)
+	const formData = getFormData(formInfo)
 	const request = new XMLHttpRequest()
 	request.open('PUT', baseUrl + '/classes/' + id)
 	request.onload = () => {
@@ -300,14 +303,33 @@ function getFormData(form) {
 	return formData
 }
 
-function upsertCourse(name) {
-	$.ajax({
-        type: 'GET',
-        url: baseUrl + '/courses/all',
-        headers: { 'Authorization': 'Bearer ' + token },
-        success: ({ result }) => {
-			//if (result.
-        },
-        error: (e) => alert(e),
+function upsertCourse(name, faculty) {
+    return new Promise((success, error) => {
+        $.ajax({
+            type: 'GET',
+            url: baseUrl + '/courses/all',
+            headers: { 'Authorization': 'Bearer ' + token },
+            success: ({ result }) => {
+                const courseAlreadyExists = result.some(course => course.name === name)
+                if (!courseAlreadyExists) {
+                    $.ajax({
+                        type: 'POST',
+                        url: baseUrl + '/courses',
+                        data: JSON.stringify({
+                            course: {
+                                name,
+                                faculty,
+                            }
+                        }),
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        headers: { 'Authorization': 'Bearer ' + token },
+                        success,
+                        error,
+                    })
+                }
+            },
+            error,
+        })
     })
 }
