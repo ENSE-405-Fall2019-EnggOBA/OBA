@@ -54,7 +54,6 @@ $('#save-btn').on('click', async function() {
         if (request.status === 200) {
             location.hash = '#' + id
         }
-		alert('done')
 	}
 	request.send(formData)
 })
