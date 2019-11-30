@@ -1,4 +1,3 @@
-const baseUrl = 'https://maciag.ursse.org/api'
 let token;
 
 // hardcoded for convenience
@@ -85,7 +84,7 @@ $(document).ready(function() {
 	}
     if (!token) {
         setTimeout(() => {
-            window.location.href = 'https://maciag.ursse.org/oba/login.html'
+            window.location.href = 'login.html'
         }, 500);
         return
     }

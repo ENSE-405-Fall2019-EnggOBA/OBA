@@ -1,10 +1,8 @@
-const baseUrl = 'https://maciag.ursse.org/api'
-
 $(document).ready(function() {
     token = window.localStorage.getItem('oba-token')
     if (!token) {
         setTimeout(() => {
-            window.location.href = 'https://maciag.ursse.org/oba/login.html'
+            window.location.href = 'login.html'
         }, 500);
         return
     }
@@ -31,7 +29,7 @@ $(document).ready(function() {
         error: (e) => {
             window.localStorage.removeItem('oba-token')
             alert(`error loading page: ${e}`)
-            window.location.href = 'https://maciag.ursse.org/oba/login.html'
+            window.location.href = 'login.html'
         }
     })
 })

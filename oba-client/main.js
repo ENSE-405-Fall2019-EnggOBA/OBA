@@ -1,5 +1,3 @@
-const baseUrl = "https://maciag.ursse.org/api"
-
 // Registration
 $(document).on('submit', '#signup', function(){
     let email = $('#email').val()
@@ -16,7 +14,7 @@ $(document).on('submit', '#signup', function(){
     	url: baseUrl + "/users", 
     	success: function(result){
 			setTimeout(function() {
-				window.location.href = "https://maciag.ursse.org/oba/login.html";
+				window.location.href = "login.html";
 			}, 500);
 		  },
 		  error: function(err){
@@ -44,7 +42,7 @@ $(document).on('submit', '#login', function(){
 			let user_role = result.result.role;
 			window.localStorage.setItem('oba-token', result.result.token)
             setTimeout(function(){
-            window.location.href = "https://maciag.ursse.org/oba/dashboard.html";
+            window.location.href = "dashboard.html";
 			}, 500);
 			$('#user_name').append(user_name);
 			$('#user_role').append(user_role);
