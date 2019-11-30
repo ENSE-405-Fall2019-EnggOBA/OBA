@@ -40,6 +40,8 @@ if (!config.isProduction) {
 require("./models/User");
 require("./models/Course");
 require("./models/Class");
+require("./models/Indicator");
+require("./models/GraduateAttribute");
 require("./config/passport");
 
 // main application routes

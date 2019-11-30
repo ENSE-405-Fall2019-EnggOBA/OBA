@@ -13,7 +13,7 @@ const ClassSchema = new mongoose.Schema(
     },
     term: { type: String },
     year: { type: Number },
-    status: { type: String, required: true },
+    status: { type: String , required: true },
     data: [
       {
         grad_attribute: String,
@@ -51,10 +51,11 @@ ClassSchema.methods.toSimpleJSON = function(course) {
   return {
     course_number: course.course_number,
     faculty_name: course.faculty_name,
-    instructor_id: this.instructor_id,
-    term: this.term,
-    year: this.year,
-    status: this.status
+    instructors: this.instructors,
+    term: course.term,
+    year: course.year,
+    course_status: course.status,
+    class_status: this.status
   };
 };
 
