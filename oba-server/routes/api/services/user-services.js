@@ -12,14 +12,16 @@ const upload_schema = require("./user-validation-schemas");
 function register(req, res) {
   const res_body = { status: "", errors: [], result: {} };
   const user = new User();
-  upload_file(file_utils.multer_single_file_upload, req, res)
-    .then(result => {
-      if (!result)
-        throw http_utils.mongoose_promise_chain_error("missing avatar field");
-
-      logging_utils.info("avatar uploaded.");
-      return upload_schema.register_user_schema.validate(req.body);
-    })
+  Promise.resolve(upload_schema.register_user_schema.validate(req.body))
+  //
+  // upload_file(file_utils.multer_single_file_upload, req, res)
+  //   .then(result => {
+  //     if (!result)
+  //       throw http_utils.mongoose_promise_chain_error("missing avatar field");
+  //
+  //     logging_utils.info("avatar uploaded.");
+  //     return upload_schema.register_user_schema.validate(req.body);
+  //   })
     .then(result => {
       if (result.error) {
         throw http_utils.mongoose_promise_chain_error(result.error.details);
