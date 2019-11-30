@@ -52,8 +52,10 @@ $('#save-btn').on('click', async function() {
     request.open('PUT', baseUrl + '/classes/' + id)
     request.setRequestHeader('Authorization', 'Bearer ' + token)
 	request.onload = () => {
+        if (request.status === 200) {
+            location.hash = '#' + id
+        }
 		alert('done')
-		location.hash = '#' + id
 	}
 	request.send(formData)
 })
@@ -333,6 +335,8 @@ function upsertCourse(name, faculty) {
                         success,
                         error,
                     })
+                } else {
+                    success()
                 }
             },
             error,
