@@ -81,8 +81,8 @@ function update(req, res) {
       ).exec();
     })
     .then(record => {
-      if (!record.course_id && course_id) record.course_id = course_id;
-      if (!record.term && req.body.term) record.term = req.body.term;
+      record.course_id = course_id;
+      record.term = req.body.term;
       service_helpers.update_class(req, record);
       return record.save();
     })
