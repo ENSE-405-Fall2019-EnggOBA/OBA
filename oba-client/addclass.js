@@ -71,7 +71,7 @@ function prepareFormInfo() {
 		term: $('#termSelect').val(),
 		faculty: config.faculties[$('#facultySelect').val()],
 		course_name: $('#facultySelect').val() + $('#courseNoInput').val(),
-		year: 2020,
+		year: 2019,
 		data,
 	}
 	return form
