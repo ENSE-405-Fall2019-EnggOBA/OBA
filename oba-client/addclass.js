@@ -236,7 +236,6 @@ function addGa(div, data = {
     const qDiv = $(`#${id}-questions`)
     qDiv.data('count', questions.length)
     questions.forEach((question, index) => {
-        alert(question.question)
         qDiv.append(`
 <div class="col">
     <div class="form-group">
