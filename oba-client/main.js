@@ -2,9 +2,10 @@
 $(document).on('submit', '#signup', function(){
     let email = $('#email').val()
     let role = $('#role').val()
-    let password = $('#password').val()
+	let password = $('#password').val()
+	const faculty = $('#faculty').val()
 
-    let json_data_register = {"user": {"email" : email, "role" : role, "password": password}};
+    let json_data_register = {email, role, password, faculty};
 
     $.ajax({
 		type:'POST', 
