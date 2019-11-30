@@ -221,7 +221,7 @@ function get_all(req, res) {
             user_premissions.premissions["read_faculty_write_local"]
           ? {}
           : {
-              _id: { $in: record.classes }
+              instructor_id: ObjectId(req.currentUser.id)
             }
       )
         .populate({ path: "course_id", options: { lean: true } })
