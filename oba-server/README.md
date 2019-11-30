@@ -12,21 +12,30 @@ Documentation style follows @iros REST api documentation.
 # Table of Contents
 
 <!--ts-->
-   * [**Users**](#users)
-      * [Register](#register)
-      * [Login](#login)
-   * [**Courses**](#courses)
-      * [Get by name](#GetName)
-      * [Get all](#GetAll)
-      * [Create](#create)
-   * [**Classes**](#Classes)
-       * [Get all by name](#GetAllName)
-       * [Get all](#GetAll)
-       * [Update](#Update)
-   * [**Form**](#Form)
-      * [Get indicators](#GetAllIndicators)
-      * [Get graduate attributes](#GetAllGraduateAttributes)
-      * [Get questions](#GetAllQuestions)
+ * [**Users**](#users)
+     * [Register](#register)
+     * [Login](#login)
+ * [**Courses**](#courses)
+     * [Get by name](#GetName)
+     * [Get all](#GetAll)
+     * [Create](#create)
+ * [**Classes**](#Classes)
+     * [Get all by name](#GetAllName)
+     * [Get all](#GetAll)
+     * [Update](#Update)
+ * [**Form**](#Form)
+     * [Indicators](#GetIndicatorByNumber)
+       * [Get by number](#GetIndicatorByNumber)
+       * [Get all](#GetAllIndicators)
+       * [Create](#CreateIndicator)
+       * [Update](#UpdateIndicator)
+     * [Graduate Attributes](#GetGraduateAttributeByNumber)
+       * [Get by number](#GetGraduateAttributeByNumber)
+       * [Get all](#GetAllGraduateAttributes)
+       * [Create](#CreateGraduateAttribute)
+       * [Update](#UpdateGraduateAttribute)
+     * [Questions](#GetAllQuestions)
+       * [Get all](#GetAllQuestions)
 <!--te-->
 
 # API Endpoints Table
@@ -40,9 +49,16 @@ Documentation style follows @iros REST api documentation.
 |  6 	|   Class  	|        localhost:3000/api/classes        	|      GET     	| Gets classes by name. Can return more than one class if multiple are offered in same year different terms. 	|     [Get all by name](#GetAllName)   	|
 |  7 	|   Class  	|      localhost:3000/api/classes/all      	|      GET     	|                                              Gets all classes.                                             	|       [Get all](#GetAll)	|
 | 8 	|   Class  	|        localhost:3000/api/classes        	|      PUT     	|                                     Updates an existing class instance. If a class does not exisit, a new one will be created.                                    	|     [Update](#Update)   	|
-| 9 	|   Form   	|    localhost:3000/api/forms/indicators   	|      GET     	|                                            Gets all indicators.                                            	|        [Get indicators](#GetAllIndicators)	|
-| 10 	|   Form   	|    localhost:3000/api/forms/questions    	|      GET     	|                                             Gets all questions.                                            	|      [Get graduate attributes](#GetAllGraduateAttributes)   	|
-| 11 	|   Form   	| localhost:3000/api/forms/grad_attributes 	|      GET     	|                                        Gets all graduate attributes.                                       	|    [Get questions](#GetAllQuestions)  	|
+| 9 	|   Form   	|    localhost:3000/api/forms/indicator   	|      GET     	|                                            Get indicator by a unique identification number.                                            	|        [Get by number](#GetIndicatorByNumber)	|
+| 10 	|   Form   	|    localhost:3000/api/forms/indicators   	|      GET     	|                                            Get all indicators.                                            	|        [Get all](#GetAllIndicators)	|
+| 11 	|   Form   	|    localhost:3000/api/forms/indicator   	|      POST     	|                                            Create a new UNIQUE indicator.                                            	|        [Create](#CreateIndicator)	|
+| 12 	|   Form   	|    localhost:3000/api/forms/indicator   	|      PUT     	|                                            Update an exisiting indicator.                                            	|        [Update](#UpdateIndicator)	|
+| 13 	|   Form   	| localhost:3000/api/forms/grad_attribute 	|      GET     	|                                        Gets graduate attribute by a unique identification number.                                       	|    [Get by number](#GetGraduateAttributeByNumber)  	|
+| 14 	|   Form   	| localhost:3000/api/forms/grad_attributes 	|      GET     	|                                        Gets all graduate attributes.                                       	|    [Get all](#GetAllGraduateAttributes)  	|
+| 15 	|   Form   	| localhost:3000/api/forms/grad_attribute 	|      POST     	|                                        Create a new UNIQUE graduate attribute.                                       	|    [Create](#CreateGraduateAttribute)  	|
+| 16 	|   Form   	| localhost:3000/api/forms/grad_attribute 	|      PUT     	|                                        Updates an exisiting graduate attribute.                                       	|    [Update](#UpdateGraduateAttribute)  	|
+| 17 	|   Form   	|    localhost:3000/api/forms/questions    	|      GET     	|                                             Gets all questions.                                            	|      [Get all](#GetAllQuestions)   	|
+
 
 Notes
 ============
@@ -1426,6 +1442,88 @@ OR
 
 Form
 ============
+
+GetIndicatorByNumber
+-----
+```bash
+  Gets an indicator by a unique identification number.
+```
+
+* **Route:** 
+
+  localhost:3000/api/forms/indicator
+  
+* **Request Type:** 
+  
+  GET
+  
+* **Auth Required:**
+
+  **Yes**
+  
+  
+* **Body:**
+
+
+|          	|                    number                   	|
+|:--------:	|:-------------------------------------------:	|
+| Required 	|                      x                      	|
+| Optional 	|                                             	|
+|   Notes  	| unique number that identifies the indicator 	|
+  
+  
+* **Sample Request:**
+
+```json  
+{ 
+   "indicator":{ 
+      "number":1.2
+   }
+}
+```
+  
+* **Success Response:**
+
+```json
+{
+    "status": "200 (OK)",
+    "errors": [],
+    "result": {
+        "_id": "5de1e2cfeb7d2c93644a7b8a",
+        "number": 1.2,
+        "title": "Create mathematical expressions to describe physical phenomena (or a physical problem).",
+        "createdAt": "2019-11-30T03:32:31.927Z",
+        "updatedAt": "2019-11-30T03:32:31.927Z",
+        "__v": 0
+    }
+}
+```
+
+* **Error Response:**
+
+```json
+{
+    "status": "422 (Unprocessable Entity)",
+    "errors": [
+        "indicator record already exists"
+    ],
+    "result": {}
+}
+```
+
+OR
+
+
+```json
+{
+    "status": "401 (Unauthorized)",
+    "errors": [
+        "Unauthorized access to protected route."
+    ],
+    "result": {}
+}
+```
+
 GetAllIndicators
 -----
 ```bash
@@ -1461,16 +1559,291 @@ GetAllIndicators
     "status": "200 (OK)",
     "errors": [],
     "result": [
-        "communication",
-        "problem solving",
-        "critical thinking",
-        "design",
-        "technical report writing"
+        {
+            "_id": "5de1e54559a66c1144b36f3c",
+            "number": 1.4,
+            "title": "Create mathematical expressions to describe physical phenomena (or a physical problem).",
+            "createdAt": "2019-11-30T03:43:01.900Z",
+            "updatedAt": "2019-11-30T03:43:01.900Z",
+            "__v": 0
+        },
+        {
+            "_id": "5de1e54859a66c1144b36f3d",
+            "number": 1.3,
+            "title": "Create mathematical expressions to describe physical phenomena (or a physical problem).",
+            "createdAt": "2019-11-30T03:43:04.559Z",
+            "updatedAt": "2019-11-30T03:43:04.559Z",
+            "__v": 0
+        },
+        {
+            "_id": "5de1e54a59a66c1144b36f3e",
+            "number": 1.2,
+            "title": "Create mathematical expressions to describe physical phenomena (or a physical problem).",
+            "createdAt": "2019-11-30T03:43:06.677Z",
+            "updatedAt": "2019-11-30T03:43:06.677Z",
+            "__v": 0
+        },
+        {
+            "_id": "5de1e54c59a66c1144b36f3f",
+            "number": 1.1,
+            "title": "Create mathematical expressions to describe physical phenomena (or a physical problem).",
+            "createdAt": "2019-11-30T03:43:08.731Z",
+            "updatedAt": "2019-11-30T03:43:08.731Z",
+            "__v": 0
+        }
     ]
 }
 ```
 
 * **Error Response:**
+
+```json
+{
+    "status": "401 (Unauthorized)",
+    "errors": [
+        "Unauthorized access to protected route."
+    ],
+    "result": {}
+}
+```
+
+CreateIndicator
+-----
+```bash
+  Creates a UNIQUE indicator.
+```
+
+* **Route:** 
+
+  localhost:3000/api/forms/indicators
+  
+* **Request Type:** 
+  
+  POST
+  
+* **Auth Required:**
+
+  **Yes**
+  
+  
+* **Body:**
+
+|          	|                    number                   	| title 	|
+|:--------:	|:-------------------------------------------:	|:-----:	|
+| Required 	|                      x                      	|   x   	|
+| Optional 	|                                             	|       	|
+|   Notes  	| unique number that identifies the indicator 	|       	|
+
+* **Sample Request:**
+
+```json  
+{
+	"indicator": {
+		"number" : 1.1,
+		"title" : "Create mathematical expressions to describe physical phenomena (or a physical problem)."
+	}
+}
+```
+  
+* **Success Response:**
+
+```json
+{
+    "status": "200 (OK)",
+    "errors": [],
+    "result": {
+        "_id": "5de1e54c59a66c1144b36f3f",
+        "number": 1.1,
+        "title": "Create mathematical expressions to describe physical phenomena (or a physical problem).",
+        "createdAt": "2019-11-30T03:43:08.731Z",
+        "updatedAt": "2019-11-30T03:43:08.731Z",
+        "__v": 0
+    }
+}
+```
+
+* **Error Response:**
+
+```json
+error:
+{
+    "status": "422 (Unprocessable Entity)",
+    "errors": [
+        "indicator record already exists"
+    ],
+    "result": {}
+}
+```
+
+OR
+
+
+```json
+{
+    "status": "401 (Unauthorized)",
+    "errors": [
+        "Unauthorized access to protected route."
+    ],
+    "result": {}
+}
+```
+
+UpdateIndicator
+-----
+```bash
+  Updates an exisiting indicator.
+```
+
+* **Route:** 
+
+  localhost:3000/api/forms/indicators
+  
+* **Request Type:** 
+  
+  PUT
+  
+* **Auth Required:**
+
+  **Yes**
+  
+  
+* **Body:**
+
+|          	|                    number                   	| title 	|
+|:--------:	|:-------------------------------------------:	|:-----:	|
+| Required 	|                      x                      	|   x   	|
+| Optional 	|                                             	|       	|
+|   Notes  	| unique number that identifies the indicator 	|       	|
+  
+* **Sample Request:**
+
+```json  
+{
+	"indicator": {
+		"number" : 1.1,
+		"title" : "new indicator title."
+	}
+}
+```
+  
+* **Success Response:**
+
+```json
+{
+    "status": "200 (OK)",
+    "errors": [],
+    "result": {
+        "_id": "5de1e54c59a66c1144b36f3f",
+        "number": 1.1,
+        "title": "new indicator title.",
+        "createdAt": "2019-11-30T03:43:08.731Z",
+        "updatedAt": "2019-11-30T05:05:01.039Z",
+        "__v": 0
+    }
+}
+```
+
+* **Error Response:**
+
+```json
+{
+    "status": "422 (Unprocessable Entity)",
+    "errors": [
+        "cannot find exisiting indicator to update."
+    ],
+    "result": {}
+}
+```
+
+
+OR
+
+
+```json
+{
+    "status": "401 (Unauthorized)",
+    "errors": [
+        "Unauthorized access to protected route."
+    ],
+    "result": {}
+}
+```
+
+GetGraduateAttributeByNumber
+-----
+```bash
+  Get graduate attribute by a unique identification number.
+```
+
+* **Route:** 
+
+  localhost:3000/api/forms/grad_attribute
+  
+* **Request Type:** 
+  
+  GET
+  
+* **Auth Required:**
+
+  **Yes**
+  
+  
+* **Body:**
+
+|          	|                    number                   	|
+|:--------:	|:-------------------------------------------:	|
+| Required 	|                      x                      	|
+| Optional 	|                                             	|
+|   Notes  	| unique number that identifies the GA 		|
+  
+* **Sample Request:**
+
+```json  
+{ 
+   "graduate_attribute":{ 
+      "number":1
+   }
+}
+```
+  
+* **Success Response:**
+
+```json
+{ 
+   "status":"200 (OK)",
+   "errors":[ 
+
+   ],
+   "result":{ 
+      "_id":"5de1e780ff5dee3d544e1b68",
+      "sub_gas":[ 
+         "5de1e54559a66c1144b36f3c",
+         "5de1e54a59a66c1144b36f3e"
+      ],
+      "number":1,
+      "title":"new title",
+      "description":" new description",
+      "createdAt":"2019-11-30T03:52:33.052Z",
+      "updatedAt":"2019-11-30T04:03:16.754Z",
+      "__v":1
+   }
+}
+```
+
+* **Error Response:**
+
+```json
+{
+    "status": "422 (Unprocessable Entity)",
+    "errors": [
+        "could not find graduate attribute by given number"
+    ],
+    "result": {}
+}
+```
+
+OR
+
 
 ```json
 {
@@ -1517,14 +1890,219 @@ GetAllGraduateAttributes
     "status": "200 (OK)",
     "errors": [],
     "result": [
-        "knowledge base for learning",
-        "problem base analysis",
-        "life long learning"
+        {
+            "_id": "5de1e780ff5dee3d544e1b68",
+            "sub_gas": [
+                "5de1e54559a66c1144b36f3c",
+                "5de1e54a59a66c1144b36f3e"
+            ],
+            "number": 1,
+            "title": "new title",
+            "description": " new description",
+            "createdAt": "2019-11-30T03:52:33.052Z",
+            "updatedAt": "2019-11-30T04:03:16.754Z",
+            "__v": 1
+        },
+        {
+            "_id": "5de1ea6764038795a037f7e2",
+            "sub_gas": [
+                "5de1e54559a66c1144b36f3c"
+            ],
+            "number": 2,
+            "title": "Problem Analysis",
+            "description": "An ability to use appropriate knowledge and skills to identify, formulate, analyze, and solve complex engineering problems in order to reach substantiated conclusions.",
+            "createdAt": "2019-11-30T04:04:55.922Z",
+            "updatedAt": "2019-11-30T04:04:55.922Z",
+            "__v": 0
+        }
     ]
 }
 ```
 
 * **Error Response:**
+
+```json
+{
+    "status": "401 (Unauthorized)",
+    "errors": [
+        "Unauthorized access to protected route."
+    ],
+    "result": {}
+}
+```
+
+CreateGraduateAttribute
+-----
+```bash
+  Creates a UNIQUE graduate attribute.
+```
+
+* **Route:** 
+
+  localhost:3000/api/forms/grad_attribute
+  
+* **Request Type:** 
+  
+  POST
+  
+* **Auth Required:**
+
+  **Yes**
+  
+  
+* **Body:**
+
+|          	|                    number                   	| title 	| description 	|                                    sub_gas                                    	|
+|:--------:	|:-------------------------------------------:	|:-----:	|:-----------:	|:-----------------------------------------------------------------------------:	|
+| Required 	|                      x                      	|   x   	|      x      	|                                       x                                       	|
+| Optional 	|                                             	|       	|             	|                                                                               	|
+|   Notes  	| unique number that identifies the GA 	|       	|             	| Array of mongoose object Id's of indicators that are going to be used for the GA	|
+  
+  
+* **Sample Request:**
+
+```json  
+{ 
+   "graduate_attribute":{ 
+      "number":2,
+      "title":"Problem Analysis",
+      "description":"An ability to use appropriate knowledge and skills to identify, formulate, analyze, and solve complex engineering problems in order to reach substantiated conclusions.",
+      "sub_gas":[ 
+         "5de1e54559a66c1144b36f3c"
+      ]
+   }
+}
+```
+  
+* **Success Response:**
+
+```json
+{
+    "status": "200 (OK)",
+    "errors": [],
+    "result": {
+        "sub_gas": [
+            "5de1e54559a66c1144b36f3c"
+        ],
+        "_id": "5de1ea6764038795a037f7e2",
+        "number": 2,
+        "title": "Problem Analysis",
+        "description": "An ability to use appropriate knowledge and skills to identify, formulate, analyze, and solve complex engineering problems in order to reach substantiated conclusions.",
+        "createdAt": "2019-11-30T04:04:55.922Z",
+        "updatedAt": "2019-11-30T04:04:55.922Z",
+        "__v": 0
+    }
+}
+```
+
+* **Error Response:**
+```json
+{ 
+   "status":"422 (Unprocessable Entity)",
+   "errors":[ 
+      "graduate attribute record already exists"
+   ],
+   "result":{ 
+
+   }
+}
+```
+
+OR
+
+
+```json
+{
+    "status": "401 (Unauthorized)",
+    "errors": [
+        "Unauthorized access to protected route."
+    ],
+    "result": {}
+}
+```
+
+UpdateGraduateAttribute
+-----
+```bash
+  Updates an existing graduate attribute.
+```
+
+* **Route:** 
+
+  localhost:3000/api/forms/grad_attribute
+  
+* **Request Type:** 
+  
+  PUT
+  
+* **Auth Required:**
+
+  **Yes**
+  
+  
+* **Body:**
+
+|          	|                    number                   	| title 	| description 	|                                    sub_gas                                    	|
+|:--------:	|:-------------------------------------------:	|:-----:	|:-----------:	|:-----------------------------------------------------------------------------:	|
+| Required 	|                      x                      	|       	|             	|                                                                               	|
+| Optional 	|                                             	|   x   	|      x      	|                                       x                                       	|
+|   Notes  	| unique number that identifies the indicator 	|       	|             	| Array of mongoose object Id's of indicators that are used for the current GA. 	|
+  
+  
+* **Sample Request:**
+
+```json  
+{ 
+   "graduate_attribute":{ 
+      "number":1,
+      "title":"new title",
+      "description":" new description",
+      "sub_gas":[ 
+         "5de1e54559a66c1144b36f3c",
+         "5de1e54a59a66c1144b36f3e"
+      ]
+   }
+}
+```
+  
+* **Success Response:**
+
+```json
+{
+    "status": "200 (OK)",
+    "errors": [],
+    "result": {
+        "sub_gas": [
+            "5de1e54559a66c1144b36f3c",
+            "5de1e54a59a66c1144b36f3e"
+        ],
+        "_id": "5de1e780ff5dee3d544e1b68",
+        "number": 1,
+        "title": "new title",
+        "description": " new description",
+        "createdAt": "2019-11-30T03:52:33.052Z",
+        "updatedAt": "2019-11-30T04:03:16.754Z",
+        "__v": 1
+    }
+}
+```
+
+* **Error Response:**
+
+```json
+{ 
+   "status":"422 (Unprocessable Entity)",
+   "errors":[ 
+      "cannot find exisiting graduate attribute to update."
+   ],
+   "result":{ 
+
+   }
+}
+```
+
+OR
+
 
 ```json
 {
