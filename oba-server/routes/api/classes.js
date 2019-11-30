@@ -7,7 +7,7 @@ const validator = require("express-joi-validation").createValidator({
 const validation_schemas = require("./services/class-validation-schemas");
 
 // end point to update an exisiting class
-router.put("/", auth.required, auth.guard, (req, res) => {
+router.put("/:id", auth.required, auth.guard, (req, res) => {
   routing_services.update(req, res);
 });
 

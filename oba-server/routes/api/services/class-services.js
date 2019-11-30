@@ -66,11 +66,12 @@ function update(req, res) {
 
       return Class.findOneAndUpdate(
         {
-          instructor_id: {
-            $in: new ObjectId(req.currentUser.id)
-          },
-          course_id: course_id,
-          status: { $ne: "Complete" } // keep fetching the class doc that isn't complete, otherwise create new doc for new semester
+          _id: ObjectId(req.params.id),
+          // instructor_id: {
+          //   $in: new ObjectId(req.currentUser.id)
+          // },
+          // course_id: course_id,
+          // status: { $ne: "Complete" } // keep fetching the class doc that isn't complete, otherwise create new doc for new semester
         },
         { expire: new Date() },
         { upsert: true, new: true, set: true }
