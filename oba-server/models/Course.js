@@ -4,7 +4,6 @@ const CourseSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     faculty: { type: String, required: true },
-    status: { type: String , required: true}
   },
   { timestamps: true }
 );

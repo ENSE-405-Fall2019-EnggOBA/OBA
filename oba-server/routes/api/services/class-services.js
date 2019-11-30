@@ -73,7 +73,10 @@ function update(req, res) {
           // course_id: course_id,
           // status: { $ne: "Complete" } // keep fetching the class doc that isn't complete, otherwise create new doc for new semester
         },
-        { expire: new Date() },
+        {
+          expire: new Date(),
+          instructor_id: ObjectId(req.currentUser.id),
+        },
         { upsert: true, new: true, set: true }
       ).exec();
     })

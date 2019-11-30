@@ -326,7 +326,6 @@ function upsertCourse(name, faculty) {
                             course: {
                                 name,
                                 faculty,
-                                status: '',
                             }
                         }),
                         dataType: 'json',
