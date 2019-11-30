@@ -113,8 +113,8 @@ function setupAttributesAndIndicators(
 
     attributeSelect.on('change', e => {
         indicatorSelect.html(null)
-        value = e.target.value
-        attribute = config.attributes.find(attr => attr.name === value)
+        const value = e.target.value
+        const attribute = config.attributes.find(attr => attr.name === value)
         if (attribute) {
             indicatorSelect.prop('disabled', false)
             attribute.indicators.forEach(indicator => {
@@ -127,6 +127,14 @@ function setupAttributesAndIndicators(
 
     if (attributeValue) {
         attributeSelect.val(attributeValue)
+        const value = attributeValue
+        const attribute = config.attributes.find(attr => attr.name === value)
+        if (attribute) {
+            indicatorSelect.prop('disabled', false)
+            attribute.indicators.forEach(indicator => {
+                indicatorSelect.append(`<option>${indicator.name}</option>`)
+            })
+        }
     }
     if (indicatorValue) {
         indicatorSelect.val(indicatorValue)
@@ -142,8 +150,11 @@ function loadForId(id, token) {
         type: 'GET',
         url: baseUrl + '/classes/' + id,
         headers: { 'Authorization': 'Bearer ' + token },
-        success: ({ result }) => {
-            window.lastResult = result
+        success: async ({ result }) => {
+            course = await getCourse(result.course_id)
+            $('#termSelect').val(result.term)
+            $('#facultySelect').val(course.name.substr(0, 4))
+            $('#courseNoInput').val(course.name.substr(4))
             addGa($('#data'), result.data[0])
         }
     })
@@ -307,6 +318,25 @@ function getFormData(form) {
 	})
 	formData.append('complete_flag', false)
 	return formData
+}
+
+function getCourse(courseId) {
+    return new Promise((resolve, error) => {
+        $.ajax({
+            type: 'GET',
+            url: baseUrl + '/courses/all',
+            headers: { 'Authorization': 'Bearer ' + token },
+            success: ({ result }) => {
+                const course = result.find(c => c._id === courseId)
+                if (!course) {
+                    error('404')
+                } else {
+                    resolve(course)
+                }
+            },
+            error,
+        })
+    })
 }
 
 function upsertCourse(name, faculty) {
