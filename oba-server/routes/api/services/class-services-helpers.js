@@ -3,9 +3,9 @@ const logging_utils = require("../../../utils/logger");
 const mongoose = require("mongoose");
 const Class = mongoose.model("Class");
 
-function get_document_name(req, grad_attribute, criteria) {
+function get_document_name(req, grad_attribute, criteria, fallback) {
   grad_attribute = grad_attribute.replace(' ', '_');
-  if (!req || !req.files) return '';
+  if (!req || !req.files) return fallback;
   const file = req.files.find(obj => {
     const split_index = obj.fieldname.lastIndexOf("_");
     return (
@@ -14,7 +14,7 @@ function get_document_name(req, grad_attribute, criteria) {
         criteria
     );
   });
-  if (!file) return '';
+  if (!file) return fallback;
   const extindex = file.originalname.lastIndexOf('.')
   const ext = extindex >= 0 ? file.originalname.substring(extindex) : ''
   return file.path + ext;
@@ -76,13 +76,19 @@ function update_class(req, document) {
       }
 
     // evaluation reports
+    const oldDocuments = {
+      exceeds: document.data[i].evaluation_report.exceeds.documents,
+      meets: document.data[i].evaluation_report.meets.documents,
+      developing: document.data[i].evaluation_report.developing.documents,
+      fail: document.data[i].evaluation_report.fail.documents,
+    }
+    document.data[i].evaluation_report = {}
     if (req.body.data[i].exceeds) {
-      document.data[i].evaluation_report = {
-        exceeds: {
-          criteria: req.body.data[i].exceeds.criteria,
-          grade: req.body.data[i].exceeds.grade,
-          documents: get_document_name(req, grad_attribute, 'exceeds'),
-        }
+      document.data[i].evaluation_report.exceeds = {
+        criteria: req.body.data[i].exceeds.criteria,
+        grade: req.body.data[i].exceeds.grade,
+        documents: get_document_name(req, grad_attribute, 'exceeds',
+          oldDocuments.exceeds),
       };
     }
 
@@ -90,7 +96,8 @@ function update_class(req, document) {
       document.data[i].evaluation_report.meets = {
         criteria: req.body.data[i].meets.criteria,
         grade: req.body.data[i].meets.grade,
-        documents: get_document_name(req, grad_attribute, 'meets'),
+        documents: get_document_name(req, grad_attribute, 'meets',
+          oldDocuments.meets),
       };
     }
 
@@ -98,7 +105,8 @@ function update_class(req, document) {
       document.data[i].evaluation_report.developing = {
         criteria: req.body.data[i].developing.criteria,
         grade: req.body.data[i].developing.grade,
-        documents: get_document_name(req, grad_attribute, 'developing'),
+        documents: get_document_name(req, grad_attribute, 'developing',
+          oldDocuments.developing),
       };
     }
 
@@ -106,9 +114,12 @@ function update_class(req, document) {
       document.data[i].evaluation_report.fail = {
         criteria: req.body.data[i].fail.criteria,
         grade: req.body.data[i].fail.grade,
-        documents: get_document_name(req, grad_attribute, 'fail'),
+        documents: get_document_name(req, grad_attribute, 'fail',
+          oldDocuments.fail),
       };
     }
+    console.log(oldDocuments)
+    console.log(document.data[i].evaluation_report)
   }
 
   if (

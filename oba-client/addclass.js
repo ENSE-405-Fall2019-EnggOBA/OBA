@@ -43,6 +43,7 @@ $('#add-ga-btn').on('click', function() {
 }).prop('hidden', true)
 
 $('#save-btn').on('click', async function() {
+    $('#save-btn').prop('disabled', true);
     const id = location.hash.substr(1) || generateId()
     const formInfo = prepareFormInfo()
     // ensure the course exists
@@ -53,7 +54,7 @@ $('#save-btn').on('click', async function() {
     request.setRequestHeader('Authorization', 'Bearer ' + token)
 	request.onload = () => {
         if (request.status === 200) {
-            location.hash = '#' + id
+            location.href='myclasses.html'
         }
 	}
 	request.send(formData)
