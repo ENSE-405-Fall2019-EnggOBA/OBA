@@ -29,7 +29,8 @@ const config = {
 		'ENEV': 'Environmental Systems Engineering',
 		'ENIN': 'Industrial Systems Engineering',
 		'ENPE': 'Petroleum Systems Engineering',
-		'ENPC': 'Process Systems Engineering',
+        'ENPC': 'Process Systems Engineering',
+        'ENGG': 'General Engineering'
 	}
 }
 
