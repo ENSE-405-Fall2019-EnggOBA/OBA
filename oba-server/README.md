@@ -1295,7 +1295,7 @@ Update
 |  string[]  	|      data[i][answers]      	|                                                              data[0][answers][0] = "a1"/ data[0][answers][1] = "a2"/....                                                              	|
 |   string   	| data[i][exceeds][criteria] 	|                                                                       data[0][exceeds][criteria] = "can he fly?"                                                                      	|
 |   integer  	|   data[i][exceeds][grade]  	|                                                                              data[0][exceeds][grade] = 69                                                                             	|
-|    file    	|         GA_criteria        	| CriticalThinking_Exceeds = file byte data.../ CriticalThinking_Meets = file byte data.../ CriticalThinking_Fail = file byte data..../ CriticalThinking_Developing = file byte data... 	|
+|    file    	|         GA_criteria        	| CriticalThinking_exceeds = file byte data.../ CriticalThinking_meets = file byte data.../ CriticalThinking_fail = file byte data..../ CriticalThinking_developing = file byte data... 	|
 |   boolean  	|        complete_flag       	|                                                                      complete_flag = true/ complete_flag = false                                                                      	|
   
 * **Sample Request:**

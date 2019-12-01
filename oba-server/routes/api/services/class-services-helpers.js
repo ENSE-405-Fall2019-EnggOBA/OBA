@@ -51,8 +51,9 @@ function update_class(req, document) {
     }
 
     // graduate attributes
-    if (req.body.data[i].grad_attribute)
-      document.data[i].grad_attribute = req.body.data[i].grad_attribute;
+    const grad_attribute = req.body.data[i].grad_attribute;
+    if (grad_attribute)
+      document.data[i].grad_attribute = grad_attribute;
 
     // corresponding indicator
     if (req.body.data[i].indicator)
@@ -74,7 +75,7 @@ function update_class(req, document) {
       const exceeds_index = find_tokenized_criteria_index(
         req,
         document.data[i].grad_attribute,
-        "Exceeds"
+        "exceeds"
       );
 
       document.data[i].evaluation_report = {
@@ -87,7 +88,11 @@ function update_class(req, document) {
     }
 
     if (req.body.data[i].meets) {
-      const meets_index = find_tokenized_criteria_index(req, i, "Meets");
+      const meets_index = find_tokenized_criteria_index(
+        req,
+        document.data[i].grad_attribute,
+        "meets"
+      );
 
       document.data[i].evaluation_report.meets = {
         criteria: req.body.data[i].meets.criteria,
@@ -99,8 +104,8 @@ function update_class(req, document) {
     if (req.body.data[i].developing) {
       const developing_index = find_tokenized_criteria_index(
         req,
-        i,
-        "Developing"
+        document.data[i].grad_attribute,
+        "developing"
       );
 
       document.data[i].evaluation_report.developing = {
@@ -111,7 +116,7 @@ function update_class(req, document) {
     }
 
     if (req.body.data[i].fail) {
-      const fail_index = find_tokenized_criteria_index(req, i, "Fail");
+      const fail_index = find_tokenized_criteria_index(req, grad_attribute, "fail");
 
       document.data[i].evaluation_report.fail = {
         criteria: req.body.data[i].fail.criteria,
