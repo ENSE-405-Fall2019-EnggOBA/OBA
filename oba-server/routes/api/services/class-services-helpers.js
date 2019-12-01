@@ -3,10 +3,10 @@ const logging_utils = require("../../../utils/logger");
 const mongoose = require("mongoose");
 const Class = mongoose.model("Class");
 
-function find_tokenized_criteria_index(req, grad_attribute, criteria) {
+function get_document_name(req, grad_attribute, criteria) {
   grad_attribute = grad_attribute.replace(' ', '_');
-  if (!req || !req.files) return -1;
-  return req.files.findIndex(obj => {
+  if (!req || !req.files) return '';
+  const file = req.files.find(obj => {
     const split_index = obj.fieldname.lastIndexOf("_");
     return (
       obj.fieldname.substring(0, split_index) === grad_attribute &&
@@ -14,6 +14,10 @@ function find_tokenized_criteria_index(req, grad_attribute, criteria) {
         criteria
     );
   });
+  if (!file) return '';
+  const extindex = file.originalname.lastIndexOf('.')
+  const ext = extindex >= 0 ? file.originalname.substring(extindex) : ''
+  return file.path + ext;
 }
 
 function update_late_class_statuses(term_filter) {
@@ -73,56 +77,36 @@ function update_class(req, document) {
 
     // evaluation reports
     if (req.body.data[i].exceeds) {
-      const exceeds_index = find_tokenized_criteria_index(
-        req,
-        document.data[i].grad_attribute,
-        "exceeds"
-      );
-
       document.data[i].evaluation_report = {
         exceeds: {
           criteria: req.body.data[i].exceeds.criteria,
           grade: req.body.data[i].exceeds.grade,
-          documents: exceeds_index >= 0 ? req.files[exceeds_index].path : ""
+          documents: get_document_name(req, grad_attribute, 'exceeds'),
         }
       };
     }
 
     if (req.body.data[i].meets) {
-      const meets_index = find_tokenized_criteria_index(
-        req,
-        document.data[i].grad_attribute,
-        "meets"
-      );
-
       document.data[i].evaluation_report.meets = {
         criteria: req.body.data[i].meets.criteria,
         grade: req.body.data[i].meets.grade,
-        documents: meets_index >= 0 ? req.files[meets_index].path : ""
+        documents: get_document_name(req, grad_attribute, 'meets'),
       };
     }
 
     if (req.body.data[i].developing) {
-      const developing_index = find_tokenized_criteria_index(
-        req,
-        document.data[i].grad_attribute,
-        "developing"
-      );
-
       document.data[i].evaluation_report.developing = {
         criteria: req.body.data[i].developing.criteria,
         grade: req.body.data[i].developing.grade,
-        documents: developing_index >= 0 ? req.files[developing_index].path : ""
+        documents: get_document_name(req, grad_attribute, 'developing'),
       };
     }
 
     if (req.body.data[i].fail) {
-      const fail_index = find_tokenized_criteria_index(req, grad_attribute, "fail");
-
       document.data[i].evaluation_report.fail = {
         criteria: req.body.data[i].fail.criteria,
         grade: req.body.data[i].fail.grade,
-        documents: fail_index >= 0 ? req.files[fail_index].path : ""
+        documents: get_document_name(req, grad_attribute, 'fail'),
       };
     }
   }
@@ -136,7 +120,6 @@ function update_class(req, document) {
 }
 
 module.exports = {
-  find_tokenized_criteria_index,
   update_class,
   update_late_class_statuses
 };
