@@ -129,7 +129,7 @@ const get_id_body_schema = Joi.object({
 const get_name_body_schema = Joi.object({
   class: {
     name: Joi.string()
-      .regex(/^(ENEL|ENSE|ENPE|ENPC|ENIN|ENEV)\d{3}$/)
+      .regex(/^(ENEL|ENSE|ENPE|ENPC|ENIN|ENEV|ENGG)\d{3}[A-Z]{0,2}$/)
       .required()
   }
 });
