@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const Class = mongoose.model("Class");
 
 function find_tokenized_criteria_index(req, grad_attribute, criteria) {
+  grad_attribute = grad_attribute.replace(' ', '_');
   if (!req || !req.files) return -1;
   return req.files.findIndex(obj => {
     const split_index = obj.fieldname.lastIndexOf("_");
