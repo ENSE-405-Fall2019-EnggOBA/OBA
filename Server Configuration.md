@@ -48,8 +48,10 @@ to stop: `pm2 stop index.js`
 
 ## Deploying New Backend Code
 
-1. `pm2 stop app.js` to stop the existing application in pm2
+1. `pm2 delete app` to stop the existing application in pm2
 1. `sudo rm -rf {location of existing install}` to delete the old installation, even if there are permission problems
 1. winscp or other ftp application copy the new files into `/var/www/node`
 1. in location of package.json: `npm install` to install npm packages
 1. in location of new server entry point: `pm2 start app.js` to start it
+
+Note: you may have to use sudo to find the pid on port 3000 and kill it if the re-deploy doesn't take effect or if the server still works after running delete. This usually only happens if you delete the old install before stopping it.
