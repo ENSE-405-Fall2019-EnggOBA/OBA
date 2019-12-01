@@ -1,3 +1,4 @@
+// this file is just the worst
 let token;
 
 // hardcoded for convenience
@@ -77,7 +78,44 @@ function prepareFormInfo() {
 	return form
 }
 
-$(document).ready(function() {
+function initConfig() {
+    return new Promise((resolve, error) => {
+        $.ajax({
+            type: 'GET',
+            url: baseUrl + '/forms/grad_attributes',
+            headers: { 'Authorization': 'Bearer ' + token },
+            error,
+            success: ({ result: grad_attributes }) => {
+                $.ajax({
+                    type: 'GET',
+                    url: baseUrl + '/forms/indicators',
+                    headers: { 'Authorization': 'Bearer ' + token },
+                    error,
+                    success: ({ result: allIndicators }) => {
+                        config.attributes = grad_attributes.map(grad_attribute => ({
+                            name: grad_attribute.title,
+                            indicators: grad_attribute.indicators.map(indicatorId => ({
+                                name: (allIndicators.find(i => i._id === indicatorId) || {}).title,
+                            }))
+                        }))
+                        $.ajax({
+                            type: 'GET',
+                            url: baseUrl + '/forms/questions',
+                            headers: { 'Authorization': 'Bearer ' + token },
+                            error,
+                            success: ({ result: questions }) => {
+                                config.questions = questions
+                                resolve()
+                            },
+                        })
+                    }
+                })
+            }
+        })
+    })
+}
+
+$(document).ready(async function() {
     token = window.localStorage.getItem('oba-token')
 	$('#facultySelect').html(null)
 	for (const key in config.faculties) {
@@ -89,6 +127,7 @@ $(document).ready(function() {
         }, 500);
         return
     }
+    await initConfig()
     const id = location.hash.substr(1)
     if (id) {
         loadForId(id, token)
