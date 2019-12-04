@@ -1,6 +1,5 @@
 // this file is just the worst
 let token;
-
 // hardcoded for convenience
 const config = {
     attributes: [
@@ -39,12 +38,19 @@ $('#back-btn').on('click', function() {
     location.href='myclasses.html'
 })
 
-$('#add-ga-btn').on('click', function() {
-    alert("added GA!");
-}).prop('hidden', true)
+$('#add-ga-btn').on('click', appendEmptyGa)
+
+let nextId = 0
+function appendEmptyGa() {
+	$('#data').append(`<div id="data-${nextId}"></div>`)
+	addGa($('#data-' + nextId))
+	nextId += 1
+}
 
 $('#save-btn').on('click', async function() {
-    $('#save-btn').prop('disabled', true);
+	// disable the save button so you can't click it again
+    $('#save-btn').prop('disabled', true)
+	
     const id = location.hash.substr(1) || generateId()
     const formInfo = prepareFormInfo()
     // ensure the course exists
@@ -54,9 +60,12 @@ $('#save-btn').on('click', async function() {
     request.open('PUT', baseUrl + '/classes/' + id)
     request.setRequestHeader('Authorization', 'Bearer ' + token)
 	request.onload = () => {
-        if (request.status === 200) {
+		const response = JSON.parse(request.response)
+        if (request.status === 200 && response.status === 200) {
             location.href='myclasses.html'
-        }
+        } else {
+			alert(`failed: ${request}`)
+		}
 	}
 	request.send(formData)
 })
@@ -66,8 +75,14 @@ function generateId() {
 }
 
 function prepareFormInfo() {
-	const ga = getGa($('#data'))
-	const data = [ga]
+	const data = []
+	$('#data').children().each(function() {
+		const elem = $(this)
+		if (elem.prop('id').startsWith('data-')) {
+			const ga = getGa(elem)
+			data.push(ga)
+		}
+	})
 	const form = {
 		term: $('#termSelect').val(),
 		faculty: config.faculties[$('#facultySelect').val()],
@@ -132,7 +147,7 @@ $(document).ready(async function() {
     if (id) {
         loadForId(id, token)
     } else {
-        createNew()
+		createNew()
     }
 })
 
@@ -183,7 +198,7 @@ function setupAttributesAndIndicators(
 
 function createNew() {
     $('#yearInput').val(new Date().getFullYear())
-    addGa($('#data'))
+	appendEmptyGa()
 }
 
 function loadForId(id, token) {
@@ -197,7 +212,12 @@ function loadForId(id, token) {
             $('#termSelect').val(result.term)
             $('#facultySelect').val(course.name.substr(0, 4))
             $('#courseNoInput').val(course.name.substr(4))
-            addGa($('#data'), result.data[0])
+			
+			$('#data').empty()
+			for (let i = 0; i < result.data.length; ++i) {
+				$('#data').append(`<div id="data-${i}"></div>`)
+				addGa($('#data-' + i), result.data[i])
+			}
         }
     })
 }
@@ -212,6 +232,11 @@ function addGa(div, data = {
     div.html(null)
     div.append(`
 <section class="py-0">
+    <div class="col-sm">
+		<div class="form-group">
+			<button class="form-control" id="${id}-delete">Delete Attribute</button>
+		</div>
+	</div>
     <div class="col-sm">
         <div class="form-group">
             <select class="form-control" id="${id}-attribute"></select>
@@ -269,6 +294,10 @@ function addGa(div, data = {
     <div class="row" id="${id}-questions"></div>
 </section>
     `)
+	// when delete clicked, remove the section
+	$('#' + id + '-delete').on('click', () => {
+		$('#' + id).remove()
+	})
     setupAttributesAndIndicators(
         $('#' + id + '-attribute'),
         $('#' + id + '-indicator'),
