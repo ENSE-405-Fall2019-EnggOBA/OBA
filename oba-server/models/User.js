@@ -31,7 +31,8 @@ UserSchema.methods.isPassword = function(password) {
 UserSchema.methods.toAuthJSON = function() {
   return {
     email: this.email,
-    token: this.generateJWT()
+    token: this.generateJWT(),
+    role: this.role
   };
 };
 

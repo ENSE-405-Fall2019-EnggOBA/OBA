@@ -22,6 +22,11 @@ router.get("/grad_attributes", auth.required, auth.guard, (req, res, next) => {
   routing_services.get_all_graduate_attributes(req, res);
 });
 
+// end point to DELETE a graduate attribute
+router.delete("/grad_attribute/:number", auth.required, auth.guard, (req, res, next) => {
+  routing_services.delete_graduate_attribute(req, res);
+});
+
 // end point to GET a indicator(sub-ga) by number
 router.get("/indicator", auth.required, auth.guard, (req, res, next) => {
   routing_services.get_indicator_by_number(req, res);
@@ -40,6 +45,11 @@ router.put("/indicator", auth.required, auth.guard, (req, res, next) => {
 // end point to GET all indicators(sub-ga)
 router.get("/indicators", auth.required, auth.guard, (req, res, next) => {
   routing_services.get_all_indicators(req, res);
+});
+
+// end point to DELETE an indicator
+router.delete("/indicator/:number", auth.required, auth.guard, (req, res, next) => {
+  routing_services.delete_indicator(req, res);
 });
 
 // end point to GET all questions

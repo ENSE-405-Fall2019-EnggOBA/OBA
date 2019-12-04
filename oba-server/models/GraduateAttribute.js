@@ -4,13 +4,7 @@ const GraduateAttributeSchema = new mongoose.Schema(
   {
     number: { type: Number, required: true },
     title: { type: String },
-    description: { type: String },
-    sub_gas: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Indicator"
-      }
-    ]
+    description: { type: String }
   },
   { timestamps: true }
 );

@@ -6,6 +6,57 @@ const mongoose = require("mongoose");
 const Indicator = mongoose.model("Indicator");
 const GraduateAttribute = mongoose.model("GraduateAttribute");
 
+// delete a graduate attribute by number
+function delete_graduate_attribute(req, res) {
+  const res_body = { status: "", errors: [], result: {} };
+  GraduateAttribute.findOneAndDelete({ number: req.params.number })
+    .exec()
+    .then(record => {
+      if (!record)
+        throw http_utils.mongoose_promise_chain_error(
+          "could not delete graduate attribute with given number"
+        );
+        logging_utils.info("deleted graduate attribute succesfully!");
+        http_utils.responsify(res_body, http_utils.FLAG_VALID_INPUT, record);
+    })
+    .catch(err => {
+      if (err) {
+        logging_utils.error(
+          `error deleting graduate attribute by number: ${err}`
+        );
+        http_utils.responsify(res_body, http_utils.FLAG_INVALID_INPUT, [], err);
+      }
+    })
+    .finally(() => {
+      return res.json(res_body);
+    });
+}
+
+// delete an indicator by number
+function delete_indicator(req, res) {
+  const res_body = { status: "", errors: [], result: {} };
+  Indicator.findOneAndDelete({ number: req.params.number })
+    .exec()
+    .then(record => {
+      if (!record)
+        throw http_utils.mongoose_promise_chain_error(
+          "could not delete indicator with given number"
+        );
+
+        logging_utils.info("deleted indicator succesfully!");
+        http_utils.responsify(res_body, http_utils.FLAG_VALID_INPUT, record);
+    })
+    .catch(err => {
+      if (err) {
+        logging_utils.error(`error deleting indicator by number: ${err}`);
+        http_utils.responsify(res_body, http_utils.FLAG_INVALID_INPUT, [], err);
+      }
+    })
+    .finally(() => {
+      return res.json(res_body);
+    });
+}
+
 // get a graduate attribute by number
 function get_graduate_attribute_by_number(req, res) {
   const res_body = { status: "", errors: [], result: {} };
@@ -275,9 +326,11 @@ module.exports = {
   create_graduate_attribute,
   update_graduate_attribute,
   get_all_graduate_attributes,
+  delete_graduate_attribute,
   get_indicator_by_number,
   create_indicator,
   update_indicator,
   get_all_indicators,
+  delete_indicator,
   get_all_questions
 };
