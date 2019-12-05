@@ -385,7 +385,7 @@ function getFormData(form) {
 		})
 		ga.questions_answers.forEach((question, qIndex) => {
 			formData.append(`data[${index}][questions][${qIndex}]`, question.question)
-			formData.append(`data[${index}][answers][${qIndex}]`, question.answer)
+			formData.append(`data[${index}][answers][${qIndex}]`, question.answer || ' ') // use ' ' to force an empty answer
 		})
 	})
 	formData.append('complete_flag', false)
