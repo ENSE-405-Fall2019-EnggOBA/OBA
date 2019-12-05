@@ -1,5 +1,3 @@
-// TODO: update initConfig() (line 97) to use new indicators/attributes schema.
-
 // this file is just the worst
 let token;
 // hardcoded for convenience
