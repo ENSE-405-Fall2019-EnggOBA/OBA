@@ -67,11 +67,9 @@ function update(req, res) {
       return Class.findOneAndUpdate(
         {
           _id: ObjectId(req.params.id),
-          // instructor_id: {
-          //   $in: new ObjectId(req.currentUser.id)
-          // },
-          // course_id: course_id,
-          // status: { $ne: "Complete" } // keep fetching the class doc that isn't complete, otherwise create new doc for new semester
+          course_id,
+          term: req.body.term,
+          year: req.body.year,
         },
         {
           expire: new Date(),
@@ -81,9 +79,6 @@ function update(req, res) {
       ).exec();
     })
     .then(record => {
-      record.course_id = course_id;
-      record.term = req.body.term;
-      record.year = req.body.year;
       service_helpers.update_class(req, record);
       return record.save();
     })
