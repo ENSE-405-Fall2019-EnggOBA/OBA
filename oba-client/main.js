@@ -42,6 +42,7 @@ $(document).on('submit', '#login', function(){
 			let user_name = result.result.email;
 			let user_role = result.result.role;
 			window.localStorage.setItem('oba-token', result.result.token)
+			window.localStorage.setItem('role',user_role)
             setTimeout(function(){
             window.location.href = "dashboard.html";
 			}, 500);
