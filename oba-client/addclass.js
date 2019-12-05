@@ -111,9 +111,9 @@ function initConfig() {
                     success: ({ result: allIndicators }) => {
                         config.attributes = grad_attributes.map(grad_attribute => ({
                             name: grad_attribute.title,
-                            indicators: grad_attribute.indicators.map(indicatorId => ({
-                                name: (allIndicators.find(i => i._id === indicatorId) || {}).title,
-                            }))
+                            indicators: allIndicators
+                                .filter(indicator => Math.trunc(indicator.number) === grad_attribute.number)
+                                .map(indicator => ({ name: indicator.title })),
                         }))
                         $.ajax({
                             type: 'GET',
