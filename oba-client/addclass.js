@@ -61,10 +61,11 @@ $('#save-btn').on('click', async function() {
     request.setRequestHeader('Authorization', 'Bearer ' + token)
 	request.onload = () => {
 		const response = JSON.parse(request.response)
-        if (request.status === 200 && response.status === 200) {
+        if (request.status === 200 && String(response.status).startsWith('200')) {
             location.href='myclasses.html'
         } else {
-			alert(`failed: ${request}`)
+            alert(`failed: ${response.errors && response.errors.map(x => x.message).join()}`);
+            $('#save-btn').prop('disabled', false)
 		}
 	}
 	request.send(formData)
