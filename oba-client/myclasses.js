@@ -37,3 +37,51 @@ $(document).ready(function() {
 $('#add-class-btn').on('click', function() {
     window.location.href = 'addclass.html'
 })
+
+
+<script>
+
+$(document).ready(function(){
+  	$("#inputFacultyName").on("keyup", function() {
+   		var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+
+$(document).ready(function(){
+  		$("#inputCourseNumber").on("keyup", function() {
+   		 var value = $(this).val().toLowerCase();
+    	$("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+
+$(document).ready(function(){
+  		$("#inputTerm").on("keyup", function() {
+   		 var value = $(this).val().toLowerCase();
+    	$("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+
+$(document).ready(function(){
+  		$("#inputYear").on("keyup", function() {
+   		 var value = $(this).val().toLowerCase();
+    	$("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+
+$(document).ready(function(){
+  		$("#inputStatus").on("keyup", function() {
+   		 var value = $(this).val().toLowerCase();
+    	$("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});

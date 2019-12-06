@@ -4,10 +4,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Add Class</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 </head>
-
+<style>
+.noresize {
+  resize: none; 
+}
+</style>
 
 <body>
 
@@ -19,7 +23,7 @@
            
             <div aria-labelledby="userInfo" class="dropdown-menu">
             <a href="#" class="dropdown-item">
-            	<strong class="d-block text-uppercase headings-font-family">Jinkai Fan</strong>
+            	<strong class="d-block text-uppercase headings-font-family">Name Here</strong>
             		<small>Professor</small>
             </a>
               <div class="dropdown-divider"></div>
@@ -34,13 +38,25 @@
     
     
 <div class="container">
-	<section class="py-5">
+		<section class="py-5">
+				<div class="row align-items-center">
+				<div class="col-sm">
+					<img src="https://www.uregina.ca/assets/templates/img/logo.png" alt="UR Courses" width="150px" height="150px">
+				</div>
+				
+				<div class="col-sm">
+					<p class="display-4 font-weight-bold">Add Class</p>
+				</div>
+			
+				<div class="col-sm">
+					
+				</div>
+						  
+				</div>
+		</section>
+
+	<div class="card card-body">
 	<div class="row align-items-center">
-	<div class="col-sm">
-		<img src="https://www.uregina.ca/assets/templates/img/logo.png" alt="UR Courses" width="150px" height="150px">
-	</div>
-
-
 	<div class="col-sm" >
 		<div class="form-group">
  	 	    <select class="form-control" id="facultySelect">
@@ -51,7 +67,7 @@
 		
 	<div class="col-sm" >
 		<div class="form-group">
-			<input class="form-control" id="courseNoInput" type="text" placeholder="101"/>
+			<input class="form-control" id="courseNoInput" type="text" placeholder="123"/>
 		</div>
 		</div>
 		
@@ -71,7 +87,8 @@
 			</div>
 			</div>
 	</div>
-	</section>
+	</div>
+
 
 	<form>
 		<div id="data"></div>
@@ -84,15 +101,12 @@
 			</div>
 			<div class="col-auto">
 				<button id="add-ga-btn" type="button" class="btn btn-primary">Add GA</button>
-				<button id="save-btn" type="button" class="btn btn-primary">Save</button>			 
+				<button id="save-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Save</button>		 
 			</div>
 		</div>
 	</section>
-	
-	
-         
+</div>
 
-</div>	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

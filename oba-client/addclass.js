@@ -232,26 +232,37 @@ function addGa(div, data = {
     const id = div.prop('id')
     div.html(null)
     div.append(`
-<section class="py-0">
+<section class="mt-5">
+<div class="row align-items-center">
     <div class="col-sm">
-		<div class="form-group">
-			<button class="form-control" id="${id}-delete">Delete Attribute</button>
-		</div>
-	</div>
-    <div class="col-sm">
-        <div class="form-group">
+        <div class="form-group w-75">
             <select class="form-control" id="${id}-attribute"></select>
         </div>
     </div>
+
     <div class="col-sm">
-        <div class="form-group">
+        <div class="form-group w-75">
             <select class="form-control" id="${id}-indicator"></select>
         </div>
     </div>
+
+    <div class="col-sm">
+    </div>
+
+    <div class="col-sm">
+    <div class="form-group float-right">
+        <button class="btn btn-danger" id="${id}-delete">Delete Attribute</button>
+    </div>
+</div>
+
+</div>
+</section>
+
+<section class="mt-3">
     <table class="table table-bordered">
-        <thead class="thead dark">
+        <thead class="thead-dark">
             <tr>
-                <th scope="col">Fails to meet expectations</th>
+                <th scope="col">Fails to Meet Expectations</th>
                 <th scope="col">Developing</th>
                 <th scope="col">Meets Expectations</th>
                 <th scope="col">Exceeds Expectations</th>
@@ -259,41 +270,42 @@ function addGa(div, data = {
         </thead>
         <tbody>
             <tr class="table-primary">
-                <td><input type="text" id="${id}-fail-criteria"/></td>
-                <td><input type="text" id="${id}-developing-criteria"/></td>
-                <td><input type="text" id="${id}-meets-criteria"/></td>
-                <td><input type="text" id="${id}-exceeds-criteria"/></td>
+                <td><input type="text" class="form-control bg-transparent" id="${id}-fail-criteria"/></td>
+                <td><input type="text" class="form-control bg-transparent" id="${id}-developing-criteria"/></td>
+                <td><input type="text" class="form-control bg-transparent" id="${id}-meets-criteria"/></td>
+                <td><input type="text" class="form-control bg-transparent" id="${id}-exceeds-criteria"/></td>
             </tr>
             <tr class="table-success">
-                <td><input type="number" id="${id}-fail-grade"/></td>
-                <td><input type="number" id="${id}-developing-grade"/></td>
-                <td><input type="number" id="${id}-meets-grade"/></td>
-                <td><input type="number" id="${id}-exceeds-grade"/></td>
+                <td><input type="number" class="form-control" id="${id}-fail-grade"/></td>
+                <td><input type="number" class="form-control" id="${id}-developing-grade"/></td>
+                <td><input type="number" class="form-control" id="${id}-meets-grade"/></td>
+                <td><input type="number" class="form-control" id="${id}-exceeds-grade"/></td>
             </tr>
-            <tr class="table-warning">
-                <td><div class="custom-file">
-                    <input type="file" class="custom-file-input" id="${id}-fail-document">
-                    <label class="custom-file-label" for="${id}-fail-document">Add Document</label>
+            <tr class="table-info ">
+                <td><div class="form-group ">
+                    <input type="file" class="form-control-file" id="${id}-fail-document">
+                    <label for="${id}-fail-document"></label>
                 </div></td>
-                <td><div class="custom-file">
-                    <input type="file" class="custom-file-input" id="${id}-developing-document">
-                    <label class="custom-file-label" for="${id}-developing-document">Add Document</label>
+                <td><div class="form-group">
+                    <input type="file" class="form-control-file" id="${id}-developing-document">
+                    <label for="${id}-developing-document"></label>
                 </div></td>
-                <td><div class="custom-file">
-                    <input type="file" class="custom-file-input" id="${id}-meets-document">
-                    <label class="custom-file-label" for="${id}-meets-document">Add Document</label>
+                <td><div class="form-group">
+                    <input type="file" class="form-control-file" id="${id}-meets-document">
+                    <label for="${id}-meets-document"></label>
                 </div></td>
-                <td><div class="custom-file">
-                    <input type="file" class="custom-file-input" id="${id}-exceeds-document">
-                    <label class="custom-file-label" for="${id}-exceeds-document">Add Document</label>
+                <td><div class="form-group">
+                    <input type="file" class="form-control-file" id="${id}-exceeds-document">
+                    <label for="${id}-exceeds-document"></label>
                 </div></td>
             </tr>
         </tbody>
     </table>
 </section>
-<section class="py-5">
-    <div class="row" id="${id}-questions"></div>
-</section>
+
+<section>
+    <div class="row" id="${id}-questions">
+
     `)
 	// when delete clicked, remove the section
 	$('#' + id + '-delete').on('click', () => {
@@ -322,15 +334,17 @@ function addGa(div, data = {
         qDiv.append(`
 <div class="col">
     <div class="form-group">
-        <label class="form-control" for="${id}-questions-${index}">${question.question}</label>
+        <label class="form-control" style="min-height:100px;" for="${id}-questions-${index}">${question.question}</label>
     </div>
 </div>
 <div class="col">
     <div class="form-group">
-        <textarea class="form-control" rows="3" data-question="${question.question}" id="${id}-questions-${index}">${question.answer}</textarea>
+        <textarea class="form-control noresize" style="min-height:100px;" data-question="${question.question}" id="${id}-questions-${index}">${question.answer}</textarea>
     </div>
 </div>
-<div class="w-100"></div>    
+<div class="w-100"></div>   
+</div> 
+</section>
         `)
     })
 }

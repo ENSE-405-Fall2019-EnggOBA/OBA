@@ -8,10 +8,6 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 </head>
 
-<script type="text/javascript">
-
-</script>
-
 <body>
 
     <header class="header">
@@ -22,7 +18,7 @@
            
             <div aria-labelledby="userInfo" class="dropdown-menu">
             <a href="#" class="dropdown-item">
-            	<strong class="d-block text-uppercase headings-font-family">Jinkai Fan</strong>
+            	<strong class="d-block text-uppercase headings-font-family">Name Here</strong>
             		<small>Professor</small>
             </a>
               <div class="dropdown-divider"></div>
@@ -41,25 +37,25 @@
 	
 	<div class="row align-items-center">
 	
-	<div class="row">
 	<div class="col-sm">
 		<img src="https://www.uregina.ca/external/communications/assets/identity1/Primary_Logo/Full%20Colour/UR_Logo_Primary_Full_COlour_RGB.png" alt="UR Courses" width="250px" height="100px">
 	</div>
 	
 	<div class="col-sm">
-		<p class="display-4">My Classes</p>
+			<p class="display-4 font-weight-bold">My Classes</p>
+			</div>
+		<div class="col-sm">
 		</div>
 
-	</div>
 	
 	
 	
 	</div>
 	
-	<div id="myGroup">
+	<div id="myGroup" class="mt-5">
 	
 	<div class="float-left">
-		<button hidden="true" class="btn btn-outline-primary dropdown" type="button" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseExample1">Search</button>
+		<button class="btn btn-outline-primary dropdown" type="button" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseExample1">Search</button>
 	</div>
 
 	<div class="float-right">
@@ -113,16 +109,16 @@
 	<section class="py-5">
 		<table class="table table-bordered table-striped">
 			<thead class="thead-dark">
-			<tr >
-				<th scope="col">Faculty Name</th>
-				<th scope="col">Course Number</th>
-				<th scope="col">Term</th>
-				<th scope="col">Year</th>
-				<th scope="col">Status</th>
+			<tr>
+				<th scope="col" class="th-sm">Faculty Name</th>
+				<th scope="col" class="th-sm">Course Number</th>
+				<th scope="col" class="th-sm">Term</th>
+				<th scope="col" class="th-sm">Year</th>
+				<th scope="col" class="th-sm">Status</th>
 			</tr>
 			</thead>
 			
-			<tbody id="my-classes-tbody">
+			<tbody id="my-classes-tbody myTable">
 			</tbody>
 		</table>
 		</section>
@@ -138,6 +134,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.js"></script>
 	<script src="baseurl.js"></script>
 	<script src="myclasses.js"></script>
 </body>
