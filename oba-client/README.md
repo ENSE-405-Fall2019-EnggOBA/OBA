@@ -57,4 +57,4 @@ Users can redirect to `My Classes Page` by clicking the `Back to My Classes` but
 ***
 
 ### Application Workflow
-![Application Workflow](oba-client/img/oba-application-workflow.png)
+![Application Workflow](img/oba-application-workflow.png)
